@@ -41,4 +41,7 @@ To deploy updates from this machine:
 npx vercel --prod
 ```
 
+The source is on GitHub (main branch): https://github.com/mudassermushtaq009/next-animated-portfolio
+For automatic deploys on push, connect the repo in your Vercel project settings (Git integration).
+
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

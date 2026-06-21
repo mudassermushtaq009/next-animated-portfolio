@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ArrowRight, Github, ExternalLink, Mail, MapPin, Calendar, Award, Code2 } from 'lucide-react';
+import { Menu, X, ArrowRight, Github, ExternalLink, Mail, MapPin, Calendar, Award, Code2, Sun, Moon } from 'lucide-react';
 
 // Project data
 const projects = [
@@ -76,22 +76,51 @@ export default function Portfolio() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [formStatus, setFormStatus] = useState({ submitted: false, loading: false });
   const [activeSection, setActiveSection] = useState('home');
+  const [isDark, setIsDark] = useState(true);
 
-  // Close mobile menu on nav click
+  // Theme toggle
+  useEffect(() => {
+    const dark = document.documentElement.classList.contains('dark');
+    setIsDark(dark);
+  }, []);
+
+  const toggleTheme = () => {
+    if (isDark) {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+      setIsDark(false);
+    } else {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+      setIsDark(true);
+    }
+  };
+
+  // Lock body scroll while mobile menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else if (!selectedProject) {
+      document.body.style.overflow = '';
+    }
+  }, [isMenuOpen, selectedProject]);
+
   const scrollToSection = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
+    setIsMenuOpen(false);
+    document.body.style.overflow = selectedProject ? 'hidden' : '';
+
+    requestAnimationFrame(() => {
+      const element = document.getElementById(id);
+      if (!element) return;
+
       const offset = 80;
-      const bodyRect = document.body.getBoundingClientRect().top;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition - bodyRect - offset;
+      const offsetPosition = element.getBoundingClientRect().top + window.scrollY - offset;
 
       window.scrollTo({
         top: offsetPosition,
         behavior: 'smooth'
       });
-    }
-    setIsMenuOpen(false);
+    });
   };
 
   // Track active section for nav highlighting
@@ -110,7 +139,17 @@ export default function Portfolio() {
     const sections = document.querySelectorAll('section[id]');
     sections.forEach((section) => observer.observe(section));
 
-    return () => observer.disconnect();
+    const handleScroll = () => {
+      if (window.scrollY < 80) {
+        setActiveSection('home');
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   // Contact form handler
@@ -161,13 +200,13 @@ export default function Portfolio() {
   ];
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-200">
+    <div className="min-h-screen bg-white text-zinc-900 dark:bg-zinc-950 dark:text-zinc-200">
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-zinc-950/95 backdrop-blur-md border-b border-zinc-800">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 dark:bg-zinc-950/95 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800">
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
           <button 
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="font-semibold text-xl tracking-tighter hover:text-white transition-colors flex items-center gap-2"
+            className="font-semibold text-xl tracking-tighter hover:text-zinc-900 dark:hover:text-white transition-colors flex items-center gap-2"
           >
             <Code2 className="w-6 h-6 text-indigo-400" />
             <span>MuDasssR</span>
@@ -179,14 +218,14 @@ export default function Portfolio() {
               <button
                 key={link.id}
                 onClick={() => scrollToSection(link.id)}
-                className={`nav-link transition-colors ${activeSection === link.id ? 'text-white' : 'text-zinc-400'}`}
+                className={`nav-link transition-colors ${activeSection === link.id ? 'text-zinc-900 dark:text-white' : 'text-zinc-600 dark:text-zinc-400'}`}
               >
                 {link.label}
               </button>
             ))}
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <a 
               href="#contact" 
               onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
@@ -194,12 +233,23 @@ export default function Portfolio() {
             >
               Get in touch
             </a>
+
+            {/* Theme toggle - always visible */}
+            <button
+              onClick={toggleTheme}
+              className="p-2.5 text-zinc-400 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white active:text-zinc-900 dark:active:text-white transition-colors"
+              aria-label="Toggle theme"
+            >
+              {isDark ? <Sun size={18} /> : <Moon size={18} />}
+            </button>
             
             {/* Mobile menu button */}
             <button 
+              type="button"
               onClick={() => setIsMenuOpen(!isMenuOpen)} 
-              className="md:hidden p-2 text-zinc-400 hover:text-white"
+              className="md:hidden p-2.5 text-zinc-400 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white touch-manipulation"
               aria-label="Toggle menu"
+              aria-expanded={isMenuOpen}
             >
               {isMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -210,27 +260,42 @@ export default function Portfolio() {
         <AnimatePresence>
           {isMenuOpen && (
             <motion.div 
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="md:hidden border-t border-zinc-800 bg-zinc-950 mobile-menu"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+              className="md:hidden relative z-[60] border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 mobile-menu shadow-lg"
             >
-              <div className="px-6 py-6 flex flex-col gap-4 text-lg">
+              <div className="px-6 py-6 flex flex-col gap-2 text-lg">
                 {navLinks.map((link) => (
                   <button
                     key={link.id}
+                    type="button"
                     onClick={() => scrollToSection(link.id)}
-                    className="text-left py-1 text-zinc-300 active:text-white"
+                    className="text-left py-3 text-zinc-600 dark:text-zinc-300 active:text-zinc-900 dark:active:text-white touch-manipulation"
                   >
                     {link.label}
                   </button>
                 ))}
                 <button 
+                  type="button"
                   onClick={() => scrollToSection('contact')}
-                  className="btn-primary mt-3 w-full py-3 rounded-full font-medium"
+                  className="btn-primary mt-3 w-full py-3 rounded-full font-medium touch-manipulation"
                 >
                   Get in touch
                 </button>
+
+                {/* Theme toggle in mobile menu */}
+                <div className="pt-3 mt-2 border-t border-zinc-200 dark:border-zinc-800">
+                  <button
+                    type="button"
+                    onClick={() => { toggleTheme(); setIsMenuOpen(false); }}
+                    className="flex w-full items-center gap-3 py-3 text-left text-sm text-zinc-600 dark:text-zinc-300 active:text-zinc-900 dark:active:text-white touch-manipulation"
+                  >
+                    {isDark ? <Sun size={18} /> : <Moon size={18} />}
+                    <span>{isDark ? 'Light mode' : 'Dark mode'}</span>
+                  </button>
+                </div>
               </div>
             </motion.div>
           )}
@@ -249,11 +314,14 @@ export default function Portfolio() {
               AVAILABLE FOR FREELANCE &amp; COLLABS
             </div>
             
-            <h1 className="text-6xl md:text-7xl lg:text-[84px] font-semibold tracking-tighter leading-none mb-6">
-              Hi, I&apos;m <span className="hero-title">MuDasssR</span>
+            <h1 className="text-6xl md:text-7xl lg:text-[84px] font-semibold tracking-tighter leading-none mb-6 text-zinc-900 dark:text-zinc-100">
+              Hi, I&apos;m{' '}
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 via-indigo-500 to-zinc-900 dark:from-white dark:via-indigo-200 dark:to-white">
+                MuDasssR
+              </span>
             </h1>
             
-            <p className="text-2xl md:text-3xl text-zinc-400 tracking-tight max-w-3xl mx-auto mb-10">
+            <p className="text-2xl md:text-3xl text-zinc-600 dark:text-zinc-400 tracking-tight max-w-3xl mx-auto mb-10">
               Full-stack developer crafting beautiful, high-performance digital experiences.
             </p>
 
@@ -273,7 +341,7 @@ export default function Portfolio() {
               </button>
             </div>
 
-            <div className="mt-16 flex items-center justify-center gap-x-8 text-sm text-zinc-500">
+            <div className="mt-16 flex items-center justify-center gap-x-8 text-sm text-zinc-500 dark:text-zinc-500">
               <div className="flex items-center gap-2">
                 <MapPin size={15} /> Remote / Global
               </div>
@@ -283,49 +351,66 @@ export default function Portfolio() {
         </div>
 
         {/* Subtle background element */}
-        <div className="absolute inset-0 bg-[radial-gradient(#27272a_0.8px,transparent_1px)] bg-[length:5px_5px] pointer-events-none" />
+        <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_0.8px,transparent_1px)] dark:bg-[radial-gradient(#27272a_0.8px,transparent_1px)] bg-[length:5px_5px] pointer-events-none" />
         
         {/* Scroll hint */}
         <motion.div 
           animate={{ y: [0, 6, 0] }} 
           transition={{ duration: 1.8, repeat: Infinity }}
           onClick={() => scrollToSection('about')}
-          className="absolute bottom-12 hidden md:block text-xs tracking-[2px] text-zinc-600 cursor-pointer hover:text-zinc-400"
+          className="absolute bottom-12 hidden md:block text-xs tracking-[2px] text-zinc-500 dark:text-zinc-600 cursor-pointer hover:text-zinc-700 dark:hover:text-zinc-400"
         >
           SCROLL TO EXPLORE ↓
         </motion.div>
       </section>
 
       {/* ABOUT */}
-      <section id="about" className="max-w-4xl mx-auto px-6 py-24 border-t border-zinc-900">
-        <div className="max-w-2xl">
+      <section id="about" className="max-w-6xl mx-auto px-6 py-24 border-t border-zinc-200 dark:border-zinc-900">
+        <div>
           <div className="uppercase tracking-[3px] text-xs mb-3 text-indigo-400 font-medium">INTRODUCTION</div>
           <h2 className="section-header text-5xl font-semibold tracking-tighter mb-8">About me</h2>
           
-          <div className="space-y-6 text-xl text-zinc-400 leading-relaxed">
-            <p>
-              I&apos;m a product-focused developer with a passion for clean interfaces and robust systems. 
-              I bridge design and engineering to ship polished, user-centered software.
-            </p>
-            <p>
-              My work ranges from marketing sites and design systems to complex web apps and AI-powered tools. 
-              I love learning new technologies and collaborating with teams who care deeply about craft.
-            </p>
-          </div>
+          <div className="grid md:grid-cols-12 gap-10 items-center">
+            {/* Text Content */}
+            <div className="md:col-span-7 space-y-6 text-lg text-zinc-600 dark:text-zinc-400 leading-relaxed">
+              <p>
+                I&apos;m a product-focused developer with a passion for clean interfaces and robust systems. 
+                I bridge design and engineering to ship polished, user-centered software.
+              </p>
+              <p>
+                My work ranges from marketing sites and design systems to complex web apps and AI-powered tools. 
+                I love learning new technologies and collaborating with teams who care deeply about craft.
+              </p>
 
-          <div className="flex flex-wrap gap-4 mt-10">
-            <div className="flex items-center gap-2 px-4 py-2 bg-zinc-900 rounded-full text-sm border border-zinc-800">
-              <Award className="w-4 h-4 text-indigo-400" /> 50+ Projects shipped
+              <div className="flex flex-wrap gap-4 pt-4">
+                <div className="flex items-center gap-2 px-4 py-2 bg-zinc-100 dark:bg-zinc-900 rounded-full text-sm border border-zinc-200 dark:border-zinc-800">
+                  <Award className="w-4 h-4 text-indigo-400" /> 50+ Projects shipped
+                </div>
+                <div className="flex items-center gap-2 px-4 py-2 bg-zinc-100 dark:bg-zinc-900 rounded-full text-sm border border-zinc-200 dark:border-zinc-800">
+                  <Calendar className="w-4 h-4 text-indigo-400" /> Based globally
+                </div>
+              </div>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 bg-zinc-900 rounded-full text-sm border border-zinc-800">
-              <Calendar className="w-4 h-4 text-indigo-400" /> Based globally
+
+            {/* Your Photo */}
+            <div className="md:col-span-5 flex justify-center md:justify-end">
+              <div className="relative w-64 h-64 md:w-80 md:h-80 overflow-hidden rounded-full ring-4 ring-zinc-200 dark:ring-zinc-700 shadow-2xl">
+                <img 
+                  src="/profile.jpg" 
+                  alt="MuDasssR" 
+                  className="w-full h-full object-cover rounded-full"
+                  loading="eager"
+                  width={320}
+                  height={320}
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* SKILLS */}
-      <section id="skills" className="bg-zinc-900/60 py-20 border-y border-zinc-800">
+      <section id="skills" className="bg-zinc-100/60 dark:bg-zinc-900/60 py-20 border-y border-zinc-200 dark:border-zinc-800">
         <div className="max-w-6xl mx-auto px-6">
           <div className="uppercase tracking-[3px] text-xs mb-3 text-indigo-400 font-medium">WHAT I USE</div>
           <h2 className="section-header text-5xl font-semibold tracking-tighter mb-10">Skills &amp; Tools</h2>
@@ -335,13 +420,13 @@ export default function Portfolio() {
               <motion.div
                 key={index}
                 whileHover={{ scale: 1.02 }}
-                className="skill-pill px-6 py-3 rounded-full border border-zinc-800 text-base bg-zinc-950 hover:bg-zinc-900 cursor-default"
+                className="skill-pill px-6 py-3 rounded-full border border-zinc-200 dark:border-zinc-800 text-base bg-white dark:bg-zinc-950 hover:bg-zinc-100 dark:hover:bg-zinc-900 cursor-default"
               >
                 {skill}
               </motion.div>
             ))}
           </div>
-          <p className="mt-8 text-zinc-500 text-sm max-w-lg">Always exploring new tools. Currently obsessed with AI agents and high-quality motion design.</p>
+          <p className="mt-8 text-zinc-500 dark:text-zinc-500 text-sm max-w-lg">Always exploring new tools. Currently obsessed with AI agents and high-quality motion design.</p>
         </div>
       </section>
 
@@ -360,13 +445,13 @@ export default function Portfolio() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.05 }}
-              className="flex flex-col md:flex-row gap-6 md:gap-16 border-l-2 border-zinc-800 pl-6 md:pl-8 relative"
+              className="flex flex-col md:flex-row gap-6 md:gap-16 border-l-2 border-zinc-200 dark:border-zinc-800 pl-6 md:pl-8 relative"
             >
               <div className="w-40 shrink-0 font-mono text-sm text-zinc-500 pt-1">{exp.year}</div>
               <div>
                 <div className="text-2xl font-medium tracking-tight mb-1">{exp.role}</div>
-                <div className="text-indigo-400 mb-4">{exp.company}</div>
-                <p className="text-zinc-400 leading-relaxed text-[17px]">{exp.desc}</p>
+                <div className="text-indigo-500 dark:text-indigo-400 mb-4">{exp.company}</div>
+                <p className="text-zinc-600 dark:text-zinc-400 leading-relaxed text-[17px]">{exp.desc}</p>
               </div>
             </motion.div>
           ))}
@@ -374,14 +459,14 @@ export default function Portfolio() {
       </section>
 
       {/* PROJECTS */}
-      <section id="projects" className="bg-zinc-900/50 py-20 border-y border-zinc-800">
+      <section id="projects" className="bg-zinc-100/50 dark:bg-zinc-900/50 py-20 border-y border-zinc-200 dark:border-zinc-800">
         <div className="max-w-6xl mx-auto px-6">
           <div className="flex items-end justify-between mb-10">
             <div>
               <div className="uppercase tracking-[3px] text-xs mb-3 text-indigo-400 font-medium">SELECTED WORK</div>
               <h2 className="section-header text-5xl font-semibold tracking-tighter">Featured Projects</h2>
             </div>
-            <a href="#contact" onClick={(e) => {e.preventDefault(); scrollToSection('contact');}} className="hidden md:flex items-center gap-2 text-sm text-indigo-400 hover:text-indigo-300">
+            <a href="#contact" onClick={(e) => {e.preventDefault(); scrollToSection('contact');}} className="hidden md:flex items-center gap-2 text-sm text-indigo-500 dark:text-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300">
               Want to collaborate? <ArrowRight size={16} />
             </a>
           </div>
@@ -392,10 +477,10 @@ export default function Portfolio() {
                 key={project.id}
                 whileHover={{ y: -4 }}
                 onClick={() => openProject(project)}
-                className="project-card group bg-zinc-950 rounded-3xl overflow-hidden cursor-pointer flex flex-col h-full"
+                className="project-card group bg-white dark:bg-zinc-950 rounded-3xl overflow-hidden cursor-pointer flex flex-col h-full"
               >
                 {/* Project visual */}
-                <div className="aspect-[16/10] bg-zinc-900 relative overflow-hidden flex items-center justify-center">
+                <div className="aspect-[16/10] bg-zinc-100 dark:bg-zinc-900 relative overflow-hidden flex items-center justify-center">
                   {project.image ? (
                     <img 
                       src={project.image} 
@@ -416,9 +501,9 @@ export default function Portfolio() {
 
                 <div className="p-7 flex-1 flex flex-col">
                   <h3 className="font-semibold text-2xl tracking-tighter mb-3 group-hover:text-indigo-300 transition-colors">{project.title}</h3>
-                  <p className="text-zinc-400 flex-1 text-[15px] leading-snug mb-6">{project.description}</p>
+                  <p className="text-zinc-600 dark:text-zinc-400 flex-1 text-[15px] leading-snug mb-6">{project.description}</p>
 
-                  <div className="flex items-center gap-2 text-sm text-indigo-400 group-hover:gap-3 transition-all mt-auto">
+                  <div className="flex items-center gap-2 text-sm text-indigo-500 dark:text-indigo-400 group-hover:gap-3 transition-all mt-auto">
                     View details <ArrowRight size={15} className="group-hover:translate-x-0.5" />
                   </div>
                 </div>
@@ -426,7 +511,7 @@ export default function Portfolio() {
             ))}
           </div>
 
-          <p className="text-center text-zinc-500 mt-10 text-sm">Click any project card to see more details</p>
+          <p className="text-center text-zinc-500 dark:text-zinc-500 mt-10 text-sm">Click any project card to see more details</p>
         </div>
       </section>
 
@@ -438,16 +523,16 @@ export default function Portfolio() {
             <div className="uppercase tracking-[3px] text-xs mb-3 text-indigo-400 font-medium">NEXT STEP</div>
             <h2 className="section-header text-5xl font-semibold tracking-tighter mb-6">Let&apos;s build something together</h2>
             
-            <div className="space-y-5 text-lg text-zinc-400">
+            <div className="space-y-5 text-lg text-zinc-600 dark:text-zinc-400">
               <p>Have a project in mind or just want to say hi? I&apos;d love to hear from you.</p>
               <p>Currently open to freelance work, collaborations and interesting full-time opportunities.</p>
             </div>
 
             <div className="mt-10 space-y-3 text-sm">
-              <a href="mailto:hello@mudasssr.dev" className="flex items-center gap-3 text-zinc-400 hover:text-white">
+              <a href="mailto:hello@mudasssr.dev" className="flex items-center gap-3 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white">
                 <Mail size={18} className="text-indigo-400" /> hello@mudasssr.dev
               </a>
-              <div className="flex items-center gap-3 text-zinc-400">
+              <div className="flex items-center gap-3 text-zinc-600 dark:text-zinc-400">
                 <MapPin size={18} className="text-indigo-400" /> Remote / Worldwide
               </div>
             </div>
@@ -461,19 +546,19 @@ export default function Portfolio() {
                   key="success"
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="rounded-3xl border border-emerald-900 bg-emerald-950/50 p-10 text-center"
+                  className="rounded-3xl border border-emerald-300 dark:border-emerald-900 bg-emerald-100/50 dark:bg-emerald-950/50 p-10 text-center"
                 >
                   <div className="mx-auto w-14 h-14 rounded-full bg-emerald-900 flex items-center justify-center mb-5">
                     <Mail className="text-emerald-400" />
                   </div>
                   <div className="text-2xl font-semibold tracking-tight mb-2">Thank you!</div>
-                  <p className="text-emerald-300/80">Your message has been sent. I&apos;ll get back to you soon.</p>
+                  <p className="text-emerald-700 dark:text-emerald-300/80">Your message has been sent. I&apos;ll get back to you soon.</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className="block text-xs tracking-widest mb-2 text-zinc-500">YOUR NAME</label>
+                      <label className="block text-xs tracking-widest mb-2 text-zinc-600 dark:text-zinc-500">YOUR NAME</label>
                       <input 
                         type="text" 
                         name="name" 
@@ -485,7 +570,7 @@ export default function Portfolio() {
                       />
                     </div>
                     <div>
-                      <label className="block text-xs tracking-widest mb-2 text-zinc-500">EMAIL ADDRESS</label>
+                      <label className="block text-xs tracking-widest mb-2 text-zinc-600 dark:text-zinc-500">EMAIL ADDRESS</label>
                       <input 
                         type="email" 
                         name="email" 
@@ -499,7 +584,7 @@ export default function Portfolio() {
                   </div>
 
                   <div>
-                    <label className="block text-xs tracking-widest mb-2 text-zinc-500">MESSAGE</label>
+                    <label className="block text-xs tracking-widest mb-2 text-zinc-600 dark:text-zinc-500">MESSAGE</label>
                     <textarea 
                       name="message" 
                       value={formData.message} 
@@ -519,7 +604,7 @@ export default function Portfolio() {
                     {formStatus.loading ? "Sending..." : "Send message"}
                     {!formStatus.loading && <ArrowRight />}
                   </button>
-                  <p className="text-[13px] text-zinc-500 pt-1">I usually reply within 24 hours.</p>
+                  <p className="text-[13px] text-zinc-500 dark:text-zinc-500 pt-1">I usually reply within 24 hours.</p>
                 </form>
               )}
             </AnimatePresence>
@@ -528,14 +613,14 @@ export default function Portfolio() {
       </section>
 
       {/* FOOTER */}
-      <footer className="border-t border-zinc-800 py-12 text-sm text-zinc-500">
+      <footer className="border-t border-zinc-200 dark:border-zinc-800 py-12 text-sm text-zinc-500 dark:text-zinc-500">
         <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-y-4">
           <div>© {new Date().getFullYear()} MuDasssR. Crafted with care.</div>
           
           <div className="flex items-center gap-5">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-zinc-300 transition-colors"><Github size={15} /> GitHub</a>
-            <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-zinc-300 transition-colors">X / Twitter</a>
-            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-zinc-300 transition-colors">LinkedIn</a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"><Github size={15} /> GitHub</a>
+            <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors">X / Twitter</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors">LinkedIn</a>
           </div>
         </div>
       </footer>
@@ -560,7 +645,7 @@ export default function Portfolio() {
               </button>
 
               {/* Modal hero image / header */}
-              <div className="h-56 bg-zinc-900 flex items-center justify-center relative">
+              <div className="h-56 bg-zinc-100 dark:bg-zinc-900 flex items-center justify-center relative">
                 {selectedProject.image ? (
                   <img src={selectedProject.image} alt="" className="absolute inset-0 w-full h-full object-cover opacity-60" />
                 ) : (
@@ -576,29 +661,41 @@ export default function Portfolio() {
 
                 <div className="flex flex-wrap gap-2 mb-7">
                   {selectedProject.tags.map((tag, i) => (
-                    <span key={i} className="text-sm px-4 py-px rounded-full bg-zinc-900 border border-zinc-800">{tag}</span>
+                    <span key={i} className="text-sm px-4 py-px rounded-full bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">{tag}</span>
                   ))}
                 </div>
 
-                <p className="text-xl text-zinc-400 mb-8">{selectedProject.details}</p>
+                <p className="text-xl text-zinc-600 dark:text-zinc-400 mb-8">{selectedProject.details}</p>
 
                 <div className="flex gap-4 pt-1">
-                  <a 
-                    href={selectedProject.live} 
-                    className="btn-primary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium"
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    View live demo <ExternalLink size={16} />
-                  </a>
-                  <a 
-                    href={selectedProject.github} 
-                    className="btn-secondary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium"
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    <Github size={16} /> View on GitHub
-                  </a>
+                  {selectedProject.live && selectedProject.live !== '#' ? (
+                    <a 
+                      href={selectedProject.live} 
+                      className="btn-primary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium"
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      View live demo <ExternalLink size={16} />
+                    </a>
+                  ) : (
+                    <span className="btn-primary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium opacity-50 cursor-not-allowed">
+                      Demo coming soon
+                    </span>
+                  )}
+                  {selectedProject.github && selectedProject.github !== '#' ? (
+                    <a 
+                      href={selectedProject.github} 
+                      className="btn-secondary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium"
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                    >
+                      <Github size={16} /> View on GitHub
+                    </a>
+                  ) : (
+                    <span className="btn-secondary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium opacity-50 cursor-not-allowed">
+                      Code coming soon
+                    </span>
+                  )}
                 </div>
               </div>
             </motion.div>
