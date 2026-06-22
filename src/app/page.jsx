@@ -24,12 +24,12 @@ export default function Portfolio() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [formStatus, setFormStatus] = useState({ submitted: false, loading: false });
   const [activeSection, setActiveSection] = useState('home');
-  const [isDark, setIsDark] = useState(true);
+  const [isDark, setIsDark] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
-  // Theme toggle
   useEffect(() => {
-    const dark = document.documentElement.classList.contains('dark');
-    setIsDark(dark);
+    setMounted(true);
+    setIsDark(document.documentElement.classList.contains('dark'));
   }, []);
 
   const toggleTheme = () => {
@@ -136,7 +136,7 @@ export default function Portfolio() {
 
   const closeProject = () => {
     setSelectedProject(null);
-    document.body.style.overflow = 'unset';
+    document.body.style.overflow = '';
   };
 
   const navLinks = [
@@ -187,8 +187,11 @@ export default function Portfolio() {
               onClick={toggleTheme}
               className="p-2.5 text-zinc-400 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white active:text-zinc-900 dark:active:text-white transition-colors"
               aria-label="Toggle theme"
+              suppressHydrationWarning
             >
-              {isDark ? <Sun size={18} /> : <Moon size={18} />}
+              {mounted ? (isDark ? <Sun size={18} /> : <Moon size={18} />) : (
+                <span className="inline-block w-[18px] h-[18px]" aria-hidden="true" />
+              )}
             </button>
             
             {/* Mobile menu button */}
@@ -240,8 +243,8 @@ export default function Portfolio() {
                     onClick={() => { toggleTheme(); setIsMenuOpen(false); }}
                     className="flex w-full items-center gap-3 py-3 text-left text-sm text-zinc-600 dark:text-zinc-300 active:text-zinc-900 dark:active:text-white touch-manipulation"
                   >
-                    {isDark ? <Sun size={18} /> : <Moon size={18} />}
-                    <span>{isDark ? 'Light mode' : 'Dark mode'}</span>
+                    {mounted ? (isDark ? <Sun size={18} /> : <Moon size={18} />) : null}
+                    <span suppressHydrationWarning>{mounted ? (isDark ? 'Light mode' : 'Dark mode') : 'Theme'}</span>
                   </button>
                 </div>
               </div>
@@ -254,11 +257,11 @@ export default function Portfolio() {
       <section id="home" className="pt-24 md:pt-28 pb-16 min-h-[100dvh] flex items-center justify-center relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={false}
+            animate={mounted ? { opacity: 1, y: 0 } : false}
             transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
           >
-            <HeroSlider onScrollTo={scrollToSection} />
+            <HeroSlider onScrollTo={scrollToSection} mounted={mounted} />
           </motion.div>
         </div>
 

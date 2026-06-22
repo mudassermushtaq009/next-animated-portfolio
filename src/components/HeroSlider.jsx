@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight, MapPin } from "lucide-react";
 import { mernSlides } from "../data/mernSlides";
 
-export default function HeroSlider({ onScrollTo }) {
+export default function HeroSlider({ onScrollTo, mounted = true }) {
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -18,10 +18,10 @@ export default function HeroSlider({ onScrollTo }) {
   }, []);
 
   useEffect(() => {
-    if (isPaused) return;
+    if (!mounted || isPaused) return;
     const timer = setInterval(next, 4500);
     return () => clearInterval(timer);
-  }, [isPaused, next]);
+  }, [isPaused, next, mounted]);
 
   const slide = mernSlides[current];
 
@@ -45,18 +45,24 @@ export default function HeroSlider({ onScrollTo }) {
           </h1>
 
           <div className="min-h-[5.5rem] md:min-h-[6.5rem] mb-8">
-            <AnimatePresence mode="wait">
-              <motion.p
-                key={current}
-                initial={{ opacity: 0, y: 14 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
-                className="text-xl md:text-2xl lg:text-[1.65rem] text-zinc-600 dark:text-zinc-400 tracking-tight leading-snug max-w-xl mx-auto lg:mx-0"
-              >
+            {mounted ? (
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={current}
+                  initial={{ opacity: 0, y: 14 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.35, ease: [0.23, 1, 0.32, 1] }}
+                  className="text-xl md:text-2xl lg:text-[1.65rem] text-zinc-600 dark:text-zinc-400 tracking-tight leading-snug max-w-xl mx-auto lg:mx-0"
+                >
+                  {slide.heroTagline}
+                </motion.p>
+              </AnimatePresence>
+            ) : (
+              <p className="text-xl md:text-2xl lg:text-[1.65rem] text-zinc-600 dark:text-zinc-400 tracking-tight leading-snug max-w-xl mx-auto lg:mx-0">
                 {slide.heroTagline}
-              </motion.p>
-            </AnimatePresence>
+              </p>
+            )}
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start mb-8">
@@ -100,15 +106,27 @@ export default function HeroSlider({ onScrollTo }) {
 
         <div className="hero-slider-panel relative rounded-3xl overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900 shadow-2xl lg:scale-[1.02] lg:origin-center">
           <div className="relative aspect-[4/3] sm:aspect-[3/2] lg:aspect-[16/10] lg:min-h-[400px] xl:min-h-[460px] overflow-hidden">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={current}
-                initial={{ opacity: 0, scale: 1.03 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
-                className="absolute inset-0"
-              >
+            {mounted ? (
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={current}
+                  initial={{ opacity: 0, scale: 1.03 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.98 }}
+                  transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+                  className="absolute inset-0"
+                >
+                  <img
+                    src={slide.image}
+                    alt={slide.title}
+                    className="w-full h-full object-cover"
+                    loading="eager"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
+                </motion.div>
+              </AnimatePresence>
+            ) : (
+              <div className="absolute inset-0">
                 <img
                   src={slide.image}
                   alt={slide.title}
@@ -116,8 +134,8 @@ export default function HeroSlider({ onScrollTo }) {
                   loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-              </motion.div>
-            </AnimatePresence>
+              </div>
+            )}
 
             <button
               type="button"
@@ -137,32 +155,43 @@ export default function HeroSlider({ onScrollTo }) {
             </button>
 
             <div className="absolute bottom-0 left-0 right-0 p-6 md:p-7 z-10">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={current}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -6 }}
-                  transition={{ duration: 0.3 }}
-                >
+              {mounted ? (
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={current}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <p className="text-indigo-300 text-xs font-medium tracking-wider uppercase mb-1">
+                      {slide.subtitle}
+                    </p>
+                    <h3 className="text-white text-2xl md:text-3xl font-semibold tracking-tight mb-2">
+                      {slide.title}
+                    </h3>
+                    <div className="flex flex-wrap gap-1.5">
+                      {slide.tags.slice(0, 4).map((tag) => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-white/10 text-white/90 border border-white/20 backdrop-blur-sm"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              ) : (
+                <div>
                   <p className="text-indigo-300 text-xs font-medium tracking-wider uppercase mb-1">
                     {slide.subtitle}
                   </p>
                   <h3 className="text-white text-2xl md:text-3xl font-semibold tracking-tight mb-2">
                     {slide.title}
                   </h3>
-                  <div className="flex flex-wrap gap-1.5">
-                    {slide.tags.slice(0, 4).map((tag) => (
-                      <span
-                        key={tag}
-                        className="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-white/10 text-white/90 border border-white/20 backdrop-blur-sm"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </motion.div>
-              </AnimatePresence>
+                </div>
+              )}
             </div>
           </div>
         </div>
