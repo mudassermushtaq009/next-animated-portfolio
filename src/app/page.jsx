@@ -258,7 +258,7 @@ export default function Portfolio() {
         <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
           <motion.div
             initial={false}
-            animate={mounted ? { opacity: 1, y: 0 } : false}
+            animate={mounted ? { opacity: 1, y: 0 } : undefined}
             transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
           >
             <HeroSlider onScrollTo={scrollToSection} mounted={mounted} />

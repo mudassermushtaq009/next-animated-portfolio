@@ -190,6 +190,16 @@ export default function HeroSlider({ onScrollTo, mounted = true }) {
                   <h3 className="text-white text-2xl md:text-3xl font-semibold tracking-tight mb-2">
                     {slide.title}
                   </h3>
+                  <div className="flex flex-wrap gap-1.5">
+                    {slide.tags.slice(0, 4).map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-white/10 text-white/90 border border-white/20 backdrop-blur-sm"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               )}
             </div>
