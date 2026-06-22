@@ -68,6 +68,72 @@ export const projects = [
     details:
       "Content management MERN app for writing, editing, and publishing blog posts. Includes Express API endpoints, MongoDB collections for posts and authors, and a React frontend with category tags and search filtering.",
   },
+  {
+    id: 7,
+    title: "MERN Chat App",
+    description:
+      "Real-time messaging application with React chat UI, Socket.io events, and MongoDB for storing conversations.",
+    tags: ["React", "Socket.io", "Express", "MongoDB"],
+    image: "/slider/react-frontend.svg",
+    github: `${GITHUB}/mern-chat-app`,
+    details:
+      "Full stack chat platform with user rooms, live message delivery via Socket.io, Express REST endpoints, and MongoDB collections for users and chat history. Includes typing indicators and online status support.",
+  },
+  {
+    id: 8,
+    title: "MERN Job Portal",
+    description:
+      "Job listing platform with company profiles, applicant search, filters, and MongoDB-backed job postings.",
+    tags: ["MERN", "React", "Express", "MongoDB"],
+    image: "/slider/mern-architecture.svg",
+    github: `${GITHUB}/mern-job-portal`,
+    details:
+      "Recruitment MERN application for posting jobs, browsing openings by category, and managing applications. Built with React frontend, Express API routes, and MongoDB schemas for jobs, companies, and candidates.",
+  },
+  {
+    id: 9,
+    title: "MERN Expense Tracker",
+    description:
+      "Personal finance dashboard to track income, expenses, categories, and monthly budgets with MongoDB.",
+    tags: ["React", "Node.js", "MongoDB", "Charts"],
+    image: "/slider/mongodb-database.svg",
+    github: `${GITHUB}/mern-expense-tracker`,
+    details:
+      "MERN expense management app with transaction CRUD, category breakdowns, monthly summaries, and a React dashboard. Uses Express for API logic and MongoDB for persistent financial records.",
+  },
+  {
+    id: 10,
+    title: "MERN Event Booker",
+    description:
+      "Event discovery and ticket booking system with React calendar UI, Express APIs, and MongoDB events store.",
+    tags: ["React", "Express", "MongoDB", "Booking"],
+    image: "/slider/node-express-api.svg",
+    github: `${GITHUB}/mern-event-booker`,
+    details:
+      "Event management MERN app for listing concerts, workshops, and meetups. Users can browse events, reserve tickets, and view bookings. Powered by Express backend routes and MongoDB document storage.",
+  },
+  {
+    id: 11,
+    title: "MERN URL Shortener",
+    description:
+      "Link shortening service with click analytics, custom aliases, and MongoDB mapping for short URLs.",
+    tags: ["Node.js", "Express", "MongoDB", "REST API"],
+    image: "/slider/mern-stack.svg",
+    github: `${GITHUB}/mern-url-shortener`,
+    details:
+      "MERN URL shortener with slug generation, redirect handling, click count tracking, and a React admin panel. Express serves redirect logic while MongoDB stores original URLs and analytics metadata.",
+  },
+  {
+    id: 12,
+    title: "MERN Recipe Finder",
+    description:
+      "Recipe search app with ingredient filters, saved favorites, and a MongoDB recipe database.",
+    tags: ["MERN", "React", "MongoDB", "Search"],
+    image: "/slider/react-frontend.svg",
+    github: `${GITHUB}/mern-recipe-finder`,
+    details:
+      "Culinary MERN platform for discovering recipes by cuisine, ingredients, and cook time. Includes React search UI, Express API endpoints, MongoDB recipe collections, and a favorites system for logged-in users.",
+  },
 ];
 
 export const githubProfile = GITHUB;
