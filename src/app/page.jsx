@@ -584,34 +584,24 @@ export default function Portfolio() {
 
                 <p className="text-xl text-zinc-600 dark:text-zinc-400 mb-8">{selectedProject.details}</p>
 
-                <div className="flex gap-4 pt-1">
-                  {selectedProject.live && selectedProject.live !== '#' ? (
-                    <a 
-                      href={selectedProject.live} 
-                      className="btn-primary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium"
-                      target="_blank" 
+                <div className="flex flex-wrap gap-4 pt-1">
+                  <a
+                    href={selectedProject.github}
+                    className="btn-primary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Github size={16} /> View on GitHub
+                  </a>
+                  {selectedProject.live && (
+                    <a
+                      href={selectedProject.live}
+                      className="btn-secondary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium"
+                      target="_blank"
                       rel="noopener noreferrer"
                     >
                       View live demo <ExternalLink size={16} />
                     </a>
-                  ) : (
-                    <span className="btn-primary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium opacity-50 cursor-not-allowed">
-                      Demo coming soon
-                    </span>
-                  )}
-                  {selectedProject.github && selectedProject.github !== '#' ? (
-                    <a 
-                      href={selectedProject.github} 
-                      className="btn-secondary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium"
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                    >
-                      <Github size={16} /> View on GitHub
-                    </a>
-                  ) : (
-                    <span className="btn-secondary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium opacity-50 cursor-not-allowed">
-                      Code coming soon
-                    </span>
                   )}
                 </div>
               </div>
