@@ -226,9 +226,13 @@ fs.mkdirSync(demosDir, { recursive: true });
 fs.writeFileSync(path.join(demosDir, "shared.css"), sharedCss);
 
 for (const demo of demos) {
+  const html = template(demo);
   const dir = path.join(demosDir, demo.slug);
   fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(path.join(dir, "index.html"), template(demo));
+  // Folder path for Apache/cPanel hosting
+  fs.writeFileSync(path.join(dir, "index.html"), html);
+  // Flat .html path for Next.js dev server and Vercel
+  fs.writeFileSync(path.join(demosDir, `${demo.slug}.html`), html);
 }
 
 console.log(`Generated ${demos.length} live demo pages.`);

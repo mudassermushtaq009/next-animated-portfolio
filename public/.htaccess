@@ -1,0 +1,4 @@
+RewriteEngine On
+
+# Redirect /demos/slug and /demos/slug/ to flat .html files
+RewriteRule ^demos/([a-z0-9-]+)/?$ /demos/$1.html [L,R=302]
