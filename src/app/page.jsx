@@ -406,6 +406,12 @@ export default function Portfolio() {
                     <div className="absolute inset-0 bg-gradient-to-br from-zinc-800 to-zinc-950" />
                   )}
                   <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/60 to-black/90" />
+
+                  {project.live && (
+                    <span className="absolute top-4 right-4 z-10 live-demo-badge">
+                      Live Demo
+                    </span>
+                  )}
                   
                   <div className="relative z-10 flex flex-wrap gap-1.5 px-5">
                     {project.tags.slice(0, 3).map((tag, i) => (
@@ -418,8 +424,21 @@ export default function Portfolio() {
                   <h3 className="font-semibold text-2xl tracking-tighter mb-3 group-hover:text-indigo-300 transition-colors">{project.title}</h3>
                   <p className="text-zinc-600 dark:text-zinc-400 flex-1 text-[15px] leading-snug mb-6">{project.description}</p>
 
-                  <div className="flex items-center gap-2 text-sm text-indigo-500 dark:text-indigo-400 group-hover:gap-3 transition-all mt-auto">
-                    View details <ArrowRight size={15} className="group-hover:translate-x-0.5" />
+                  <div className="flex flex-wrap items-center gap-3 mt-auto">
+                    {project.live && (
+                      <a
+                        href={project.live}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-full bg-indigo-500/10 text-indigo-500 dark:text-indigo-300 border border-indigo-500/30 hover:bg-indigo-500/20 transition-colors"
+                      >
+                        <ExternalLink size={14} /> Live Demo
+                      </a>
+                    )}
+                    <span className="inline-flex items-center gap-2 text-sm text-indigo-500 dark:text-indigo-400 group-hover:gap-3 transition-all">
+                      View details <ArrowRight size={15} className="group-hover:translate-x-0.5" />
+                    </span>
                   </div>
                 </div>
               </motion.div>
@@ -588,24 +607,24 @@ export default function Portfolio() {
                 <p className="text-xl text-zinc-600 dark:text-zinc-400 mb-8">{selectedProject.details}</p>
 
                 <div className="flex flex-wrap gap-4 pt-1">
+                  {selectedProject.live && (
+                    <a
+                      href={selectedProject.live}
+                      className="btn-primary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <ExternalLink size={16} /> Watch Live Demo
+                    </a>
+                  )}
                   <a
                     href={selectedProject.github}
-                    className="btn-primary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium"
+                    className="btn-secondary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
                     <Github size={16} /> View on GitHub
                   </a>
-                  {selectedProject.live && (
-                    <a
-                      href={selectedProject.live}
-                      className="btn-secondary inline-flex items-center gap-2 rounded-full px-7 py-3 text-sm font-medium"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      View live demo <ExternalLink size={16} />
-                    </a>
-                  )}
                 </div>
               </div>
             </motion.div>

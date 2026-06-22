@@ -119,6 +119,19 @@ body {
   color: #e4e4e7;
 }
 
+.live-demo-badge {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.65rem;
+  border-radius: 9999px;
+  color: #bbf7d0;
+  background: rgba(16, 185, 129, 0.2);
+  border: 1px solid rgba(52, 211, 153, 0.45);
+  backdrop-filter: blur(6px);
+}
+
 /* Skill pills */
 .skill-pill {
   transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);

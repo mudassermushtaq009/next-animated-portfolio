@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "clean": "node -e \"const fs=require('fs');['.next','out'].forEach(d=>fs.rmSync(d,{recursive:true,force:true}))\"",
-    "build:clean": "npm run clean && npm run build"
+    "demos": "node scripts/generate-demos.mjs",
+    "build:clean": "npm run demos && npm run clean && npm run build"
   },
   "dependencies": {
     "react": "18",
