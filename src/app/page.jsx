@@ -3,65 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ArrowRight, Github, ExternalLink, Mail, MapPin, Calendar, Award, Code2, Sun, Moon } from 'lucide-react';
-
-// Project data
-const projects = [
-  {
-    id: 1,
-    title: "Animated Portfolio",
-    description: "A modern, fully animated portfolio built with Next.js, Tailwind, and Framer Motion. Smooth interactions and elegant micro-animations.",
-    tags: ["Next.js", "Tailwind", "Framer Motion"],
-    image: "/hero.png",
-    live: "#",
-    github: "#",
-    details: "Features include sticky animated navigation, scroll-triggered reveals, interactive project modals, and a fully functional contact form. Designed for performance and delightful user experience."
-  },
-  {
-    id: 2,
-    title: "AI TaskFlow",
-    description: "Smart productivity platform powered by AI. Automatically prioritizes tasks, suggests deadlines, and generates summaries using LLMs.",
-    tags: ["Next.js", "OpenAI", "TypeScript", "Prisma"],
-    image: null,
-    live: "#",
-    github: "#",
-    details: "Built an intelligent task manager that leverages GPT for task breakdown, natural language input, and weekly AI-generated progress insights. Includes realtime sync and beautiful Kanban views."
-  },
-  {
-    id: 3,
-    title: "Pulse Analytics",
-    description: "Real-time business intelligence dashboard. Visualize metrics with beautiful charts and receive instant alerts for anomalies.",
-    tags: ["React", "Recharts", "WebSockets", "Node"],
-    image: null,
-    live: "#",
-    github: "#",
-    details: "Enterprise analytics dashboard supporting live data streams, custom report exports, role-based access and beautiful data visualizations with smooth transitions."
-  },
-  {
-    id: 4,
-    title: "CollabSpace",
-    description: "Modern real-time collaboration tool. Shared whiteboards, chat, and rich document editing for remote teams.",
-    tags: ["Next.js", "Socket.io", "TipTap", "Tailwind"],
-    image: null,
-    live: "#",
-    github: "#",
-    details: "A beautiful collaborative workspace featuring multiplayer cursors, persistent drawing canvas, markdown + rich text notes, presence indicators, and instant messaging."
-  },
-  {
-    id: 5,
-    title: "VisionKit",
-    description: "Open source computer vision toolkit and playground. Upload images, run models in browser, export results.",
-    tags: ["Python", "FastAPI", "React", "ONNX"],
-    image: null,
-    live: "#",
-    github: "#",
-    details: "Client-side and backend inference for object detection, image classification, and segmentation. Built with ONNX runtime + custom pre-trained models."
-  }
-];
+import HeroSlider from '../components/HeroSlider';
+import { projects, githubProfile } from '../data/projects';
 
 const skills = [
-  "JavaScript", "TypeScript", "React", "Next.js", "Node.js", 
-  "Python", "Tailwind CSS", "Framer Motion", "PostgreSQL", 
-  "Docker", "AWS", "GraphQL", "REST APIs", "AI/ML Integration"
+  "JavaScript", "React", "Next.js", "Node.js", "Express.js",
+  "MongoDB", "Mongoose", "MERN Stack", "REST APIs", "JWT Auth",
+  "Tailwind CSS", "Framer Motion", "Git & GitHub", "Vercel Deploy"
 ];
 
 const experiences = [
@@ -303,50 +251,14 @@ export default function Portfolio() {
       </nav>
 
       {/* HERO */}
-      <section id="home" className="pt-16 min-h-[100dvh] flex items-center justify-center relative overflow-hidden">
-        <div className="max-w-5xl mx-auto px-6 text-center relative z-10">
-          <motion.div 
+      <section id="home" className="pt-24 md:pt-28 pb-16 min-h-[100dvh] flex items-center justify-center relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 relative z-10 w-full">
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
           >
-            <div className="inline-block mb-4 px-4 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-xs tracking-[3px] uppercase text-zinc-500">
-              AVAILABLE FOR FREELANCE &amp; COLLABS
-            </div>
-            
-            <h1 className="text-6xl md:text-7xl lg:text-[84px] font-semibold tracking-tighter leading-none mb-6 text-zinc-900 dark:text-zinc-100">
-              Hi, I&apos;m{' '}
-              <span className="bg-clip-text text-transparent bg-gradient-to-r from-zinc-900 via-indigo-500 to-zinc-900 dark:from-white dark:via-indigo-200 dark:to-white">
-                MuDasssR
-              </span>
-            </h1>
-            
-            <p className="text-2xl md:text-3xl text-zinc-600 dark:text-zinc-400 tracking-tight max-w-3xl mx-auto mb-10">
-              Full-stack developer crafting beautiful, high-performance digital experiences.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button 
-                onClick={() => scrollToSection('projects')}
-                className="btn-primary group flex items-center justify-center gap-3 px-8 py-4 rounded-full text-lg font-medium"
-              >
-                View my work 
-                <ArrowRight className="group-hover:translate-x-1 transition" />
-              </button>
-              <button 
-                onClick={() => scrollToSection('contact')}
-                className="btn-secondary flex items-center justify-center gap-3 px-8 py-4 rounded-full text-lg font-medium"
-              >
-                Let&apos;s talk
-              </button>
-            </div>
-
-            <div className="mt-16 flex items-center justify-center gap-x-8 text-sm text-zinc-500 dark:text-zinc-500">
-              <div className="flex items-center gap-2">
-                <MapPin size={15} /> Remote / Global
-              </div>
-              <div>5+ years building</div>
-            </div>
+            <HeroSlider onScrollTo={scrollToSection} />
           </motion.div>
         </div>
 
@@ -511,7 +423,12 @@ export default function Portfolio() {
             ))}
           </div>
 
-          <p className="text-center text-zinc-500 dark:text-zinc-500 mt-10 text-sm">Click any project card to see more details</p>
+          <p className="text-center text-zinc-500 dark:text-zinc-500 mt-10 text-sm">
+            Click any project card to see details ·{' '}
+            <a href={githubProfile} target="_blank" rel="noopener noreferrer" className="text-indigo-500 dark:text-indigo-400 hover:underline">
+              View all on GitHub
+            </a>
+          </p>
         </div>
       </section>
 
@@ -618,7 +535,7 @@ export default function Portfolio() {
           <div>© {new Date().getFullYear()} MuDasssR. Crafted with care.</div>
           
           <div className="flex items-center gap-5">
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"><Github size={15} /> GitHub</a>
+            <a href={githubProfile} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors"><Github size={15} /> GitHub</a>
             <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors">X / Twitter</a>
             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-zinc-700 dark:hover:text-zinc-300 transition-colors">LinkedIn</a>
           </div>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#082f49"/>
+      <stop offset="1" stop-color="#0c4a6e"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg2)"/>
+  <rect x="120" y="130" width="520" height="420" rx="20" fill="#0f172a" stroke="#334155" stroke-width="2"/>
+  <rect x="140" y="150" width="480" height="36" rx="8" fill="#1e293b"/>
+  <circle cx="162" cy="168" r="7" fill="#ef4444"/>
+  <circle cx="184" cy="168" r="7" fill="#eab308"/>
+  <circle cx="206" cy="168" r="7" fill="#22c55e"/>
+  <rect x="140" y="200" width="140" height="320" rx="10" fill="#1e293b"/>
+  <rect x="160" y="230" width="100" height="12" rx="4" fill="#61DAFB" opacity="0.8"/>
+  <rect x="160" y="260" width="80" height="8" rx="3" fill="#475569"/>
+  <rect x="160" y="285" width="90" height="8" rx="3" fill="#475569"/>
+  <rect x="160" y="310" width="70" height="8" rx="3" fill="#475569"/>
+  <rect x="300" y="200" width="320" height="150" rx="12" fill="#1e293b" stroke="#61DAFB" stroke-width="1.5" opacity="0.6"/>
+  <rect x="320" y="230" width="180" height="14" rx="4" fill="#61DAFB"/>
+  <rect x="320" y="260" width="240" height="10" rx="3" fill="#64748b"/>
+  <rect x="320" y="280" width="200" height="10" rx="3" fill="#64748b"/>
+  <rect x="300" y="370" width="150" height="150" rx="12" fill="#1e293b"/>
+  <rect x="320" y="400" width="110" height="10" rx="3" fill="#22d3ee"/>
+  <rect x="320" y="425" width="90" height="8" rx="3" fill="#475569"/>
+  <rect x="470" y="370" width="150" height="150" rx="12" fill="#1e293b"/>
+  <rect x="490" y="400" width="110" height="10" rx="3" fill="#22d3ee"/>
+  <rect x="490" y="425" width="90" height="8" rx="3" fill="#475569"/>
+  <g transform="translate(720,160)">
+    <circle cx="120" cy="120" r="50" fill="none" stroke="#61DAFB" stroke-width="8"/>
+    <ellipse cx="120" cy="120" rx="90" ry="32" fill="none" stroke="#61DAFB" stroke-width="6" transform="rotate(60 120 120)"/>
+    <ellipse cx="120" cy="120" rx="90" ry="32" fill="none" stroke="#61DAFB" stroke-width="6" transform="rotate(-60 120 120)"/>
+    <text x="120" y="300" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-size="42" font-weight="700">React.js</text>
+    <text x="120" y="350" text-anchor="middle" fill="#67e8f9" font-family="Arial,sans-serif" font-size="22">Component-based UI</text>
+    <text x="120" y="385" text-anchor="middle" fill="#94a3b8" font-family="Arial,sans-serif" font-size="18">Hooks · JSX · State Management</text>
+  </g>
+</svg>

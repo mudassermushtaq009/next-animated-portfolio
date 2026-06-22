@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg5" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <path d="M0,0 L10,3 L0,6 Z" fill="#818cf8"/>
+    </marker>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg5)"/>
+  <text x="600" y="70" text-anchor="middle" fill="#a5b4fc" font-family="Arial,sans-serif" font-size="22" letter-spacing="5">MERN ARCHITECTURE</text>
+  <text x="600" y="110" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-size="36" font-weight="700">Full Stack Data Flow</text>
+  <rect x="80" y="180" width="220" height="280" rx="20" fill="#0c4a6e" stroke="#61DAFB" stroke-width="2"/>
+  <text x="190" y="230" text-anchor="middle" fill="#67e8f9" font-family="Arial,sans-serif" font-size="24" font-weight="700">React</text>
+  <text x="190" y="265" text-anchor="middle" fill="#94a3b8" font-family="Arial,sans-serif" font-size="15">Client UI</text>
+  <rect x="120" y="300" width="140" height="36" rx="8" fill="#164e63"/>
+  <text x="190" y="324" text-anchor="middle" fill="#a5f3fc" font-family="monospace" font-size="13">Components</text>
+  <rect x="120" y="350" width="140" height="36" rx="8" fill="#164e63"/>
+  <text x="190" y="374" text-anchor="middle" fill="#a5f3fc" font-family="monospace" font-size="13">Axios / Fetch</text>
+  <rect x="120" y="400" width="140" height="36" rx="8" fill="#164e63"/>
+  <text x="190" y="424" text-anchor="middle" fill="#a5f3fc" font-family="monospace" font-size="13">State / Redux</text>
+  <rect x="380" y="180" width="220" height="280" rx="20" fill="#14532d" stroke="#4ade80" stroke-width="2"/>
+  <text x="490" y="230" text-anchor="middle" fill="#86efac" font-family="Arial,sans-serif" font-size="24" font-weight="700">Node.js</text>
+  <text x="490" y="265" text-anchor="middle" fill="#94a3b8" font-family="Arial,sans-serif" font-size="15">Server Runtime</text>
+  <rect x="420" y="300" width="140" height="36" rx="8" fill="#166534"/>
+  <text x="490" y="324" text-anchor="middle" fill="#bbf7d0" font-family="monospace" font-size="13">Express.js</text>
+  <rect x="420" y="350" width="140" height="36" rx="8" fill="#166534"/>
+  <text x="490" y="374" text-anchor="middle" fill="#bbf7d0" font-family="monospace" font-size="13">REST Routes</text>
+  <rect x="420" y="400" width="140" height="36" rx="8" fill="#166534"/>
+  <text x="490" y="424" text-anchor="middle" fill="#bbf7d0" font-family="monospace" font-size="13">JWT Auth</text>
+  <rect x="680" y="180" width="220" height="280" rx="20" fill="#14532d" stroke="#47A248" stroke-width="2"/>
+  <text x="790" y="230" text-anchor="middle" fill="#86efac" font-family="Arial,sans-serif" font-size="24" font-weight="700">MongoDB</text>
+  <text x="790" y="265" text-anchor="middle" fill="#94a3b8" font-family="Arial,sans-serif" font-size="15">Database Layer</text>
+  <rect x="720" y="300" width="140" height="36" rx="8" fill="#166534"/>
+  <text x="790" y="324" text-anchor="middle" fill="#bbf7d0" font-family="monospace" font-size="13">Collections</text>
+  <rect x="720" y="350" width="140" height="36" rx="8" fill="#166534"/>
+  <text x="790" y="374" text-anchor="middle" fill="#bbf7d0" font-family="monospace" font-size="13">Mongoose</text>
+  <rect x="720" y="400" width="140" height="36" rx="8" fill="#166534"/>
+  <text x="790" y="424" text-anchor="middle" fill="#bbf7d0" font-family="monospace" font-size="13">Schemas</text>
+  <rect x="960" y="220" width="180" height="200" rx="20" fill="#312e81" stroke="#818cf8" stroke-width="2"/>
+  <text x="1050" y="270" text-anchor="middle" fill="#c7d2fe" font-family="Arial,sans-serif" font-size="20" font-weight="700">Deploy</text>
+  <text x="1050" y="310" text-anchor="middle" fill="#94a3b8" font-family="Arial,sans-serif" font-size="14">Vercel / Netlify</text>
+  <text x="1050" y="340" text-anchor="middle" fill="#94a3b8" font-family="Arial,sans-serif" font-size="14">Render / Railway</text>
+  <text x="1050" y="370" text-anchor="middle" fill="#94a3b8" font-family="Arial,sans-serif" font-size="14">MongoDB Atlas</text>
+  <line x1="300" y1="320" x2="380" y2="320" stroke="#818cf8" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="600" y1="320" x2="680" y2="320" stroke="#818cf8" stroke-width="3" marker-end="url(#arrow)"/>
+  <line x1="900" y1="320" x2="960" y2="300" stroke="#818cf8" stroke-width="3" marker-end="url(#arrow)"/>
+  <text x="340" y="310" text-anchor="middle" fill="#818cf8" font-family="monospace" font-size="12">HTTP</text>
+  <text x="640" y="310" text-anchor="middle" fill="#818cf8" font-family="monospace" font-size="12">Query</text>
+  <text x="600" y="560" text-anchor="middle" fill="#e2e8f0" font-family="Arial,sans-serif" font-size="22">Build complete web apps — frontend to database</text>
+  <rect x="350" y="590" width="500" height="50" rx="25" fill="#312e81" stroke="#6366f1" stroke-width="2"/>
+  <text x="600" y="622" text-anchor="middle" fill="#c7d2fe" font-family="Arial,sans-serif" font-size="18" font-weight="600">Authentication · CRUD · Real-time · APIs</text>
+</svg>

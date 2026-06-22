@@ -1,10 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Vercel-friendly config
+  output: 'export',
+  images: {
+    unoptimized: true,
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
-  // If you want static export in future: output: 'export',
 };
 
 export default nextConfig;

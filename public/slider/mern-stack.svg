@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e1b4b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg1)"/>
+  <circle cx="150" cy="120" r="180" fill="#6366f1" opacity="0.12"/>
+  <circle cx="1050" cy="560" r="220" fill="#22c55e" opacity="0.1"/>
+  <text x="600" y="90" text-anchor="middle" fill="#a5b4fc" font-family="Arial,sans-serif" font-size="22" letter-spacing="6">FULL STACK DEVELOPMENT</text>
+  <text x="600" y="155" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-size="58" font-weight="700">MERN Stack</text>
+  <g transform="translate(200,240)">
+    <rect width="180" height="180" rx="24" fill="#47A248" opacity="0.15" stroke="#47A248" stroke-width="2"/>
+    <path d="M90 45c-35 0-63 28-63 63s28 63 63 63 63-28 63-63-28-63-63-63zm0 18c25 0 45 20 45 45s-20 45-45 45-45-20-45-45 20-45 45-45z" fill="#47A248"/>
+    <text x="90" y="155" text-anchor="middle" fill="#86efac" font-family="Arial,sans-serif" font-size="22" font-weight="600">MongoDB</text>
+  </g>
+  <g transform="translate(390,240)">
+    <rect width="180" height="180" rx="24" fill="#ffffff" opacity="0.08" stroke="#e4e4e7" stroke-width="2"/>
+    <text x="90" y="95" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-size="52" font-weight="700">Ex</text>
+    <text x="90" y="155" text-anchor="middle" fill="#e4e4e7" font-family="Arial,sans-serif" font-size="22" font-weight="600">Express.js</text>
+  </g>
+  <g transform="translate(580,240)">
+    <rect width="180" height="180" rx="24" fill="#61DAFB" opacity="0.12" stroke="#61DAFB" stroke-width="2"/>
+    <circle cx="90" cy="85" r="28" fill="none" stroke="#61DAFB" stroke-width="6"/>
+    <ellipse cx="90" cy="85" rx="50" ry="18" fill="none" stroke="#61DAFB" stroke-width="5" transform="rotate(60 90 85)"/>
+    <ellipse cx="90" cy="85" rx="50" ry="18" fill="none" stroke="#61DAFB" stroke-width="5" transform="rotate(-60 90 85)"/>
+    <text x="90" y="155" text-anchor="middle" fill="#67e8f9" font-family="Arial,sans-serif" font-size="22" font-weight="600">React.js</text>
+  </g>
+  <g transform="translate(770,240)">
+    <rect width="180" height="180" rx="24" fill="#339933" opacity="0.15" stroke="#339933" stroke-width="2"/>
+    <path d="M90 50 L55 65 L55 115 L90 130 L125 115 L125 65 Z" fill="none" stroke="#339933" stroke-width="6"/>
+    <text x="90" y="95" text-anchor="middle" fill="#4ade80" font-family="Arial,sans-serif" font-size="28" font-weight="700">JS</text>
+    <text x="90" y="155" text-anchor="middle" fill="#86efac" font-family="Arial,sans-serif" font-size="22" font-weight="600">Node.js</text>
+  </g>
+  <text x="600" y="520" text-anchor="middle" fill="#94a3b8" font-family="Arial,sans-serif" font-size="24">End-to-end web applications with JavaScript</text>
+  <rect x="350" y="560" width="500" height="4" rx="2" fill="#312e81"/>
+  <rect x="350" y="560" width="500" height="4" rx="2" fill="#6366f1"/>
+</svg>

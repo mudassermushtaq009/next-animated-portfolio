@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" fill="none">
+  <defs>
+    <linearGradient id="bg4" x1="0" y1="0" x2="1200" y2="675" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#14532d"/>
+      <stop offset="1" stop-color="#052e16"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg4)"/>
+  <path d="M600 100 C520 200 480 320 500 450 C510 520 560 580 600 600 C640 580 690 520 700 450 C720 320 680 200 600 100Z" fill="#47A248" opacity="0.25" stroke="#4ade80" stroke-width="3"/>
+  <path d="M600 140 C540 220 510 310 525 420 C532 480 570 530 600 545 C630 530 668 480 675 420 C690 310 660 220 600 140Z" fill="#47A248" opacity="0.4"/>
+  <text x="600" y="90" text-anchor="middle" fill="#86efac" font-family="Arial,sans-serif" font-size="22" letter-spacing="4">NOSQL DATABASE</text>
+  <text x="600" y="640" text-anchor="middle" fill="#ffffff" font-family="Arial,sans-serif" font-size="42" font-weight="700">MongoDB</text>
+  <rect x="140" y="200" width="340" height="320" rx="16" fill="#0f172a" stroke="#166534" stroke-width="2"/>
+  <text x="170" y="240" fill="#4ade80" font-family="monospace" font-size="16">db.users.find({ role: "admin" })</text>
+  <rect x="170" y="270" width="280" height="60" rx="8" fill="#14532d" stroke="#22c55e" stroke-width="1"/>
+  <text x="190" y="295" fill="#86efac" font-family="monospace" font-size="13">_id: ObjectId("...")</text>
+  <text x="190" y="315" fill="#bbf7d0" font-family="monospace" font-size="13">name: "MuDasssR"</text>
+  <rect x="170" y="345" width="280" height="60" rx="8" fill="#14532d" stroke="#22c55e" stroke-width="1"/>
+  <text x="190" y="370" fill="#86efac" font-family="monospace" font-size="13">_id: ObjectId("...")</text>
+  <text x="190" y="390" fill="#bbf7d0" font-family="monospace" font-size="13">role: "developer"</text>
+  <rect x="170" y="420" width="280" height="60" rx="8" fill="#14532d" stroke="#22c55e" stroke-width="1"/>
+  <text x="190" y="445" fill="#86efac" font-family="monospace" font-size="13">_id: ObjectId("...")</text>
+  <text x="190" y="465" fill="#bbf7d0" font-family="monospace" font-size="13">skills: ["React","Node"]</text>
+  <rect x="720" y="200" width="340" height="320" rx="16" fill="#0f172a" stroke="#166534" stroke-width="2"/>
+  <text x="750" y="240" fill="#4ade80" font-family="Arial,sans-serif" font-size="18" font-weight="600">Collections</text>
+  <rect x="750" y="265" width="120" height="40" rx="8" fill="#47A248" opacity="0.3" stroke="#4ade80"/>
+  <text x="810" y="291" text-anchor="middle" fill="#bbf7d0" font-family="monospace" font-size="14">users</text>
+  <rect x="890" y="265" width="120" height="40" rx="8" fill="#47A248" opacity="0.3" stroke="#4ade80"/>
+  <text x="950" y="291" text-anchor="middle" fill="#bbf7d0" font-family="monospace" font-size="14">products</text>
+  <rect x="750" y="325" width="120" height="40" rx="8" fill="#47A248" opacity="0.3" stroke="#4ade80"/>
+  <text x="810" y="351" text-anchor="middle" fill="#bbf7d0" font-family="monospace" font-size="14">orders</text>
+  <rect x="890" y="325" width="120" height="40" rx="8" fill="#47A248" opacity="0.3" stroke="#4ade80"/>
+  <text x="950" y="351" text-anchor="middle" fill="#bbf7d0" font-family="monospace" font-size="14">projects</text>
+  <text x="750" y="420" fill="#94a3b8" font-family="Arial,sans-serif" font-size="16">Flexible JSON documents</text>
+  <text x="750" y="450" fill="#94a3b8" font-family="Arial,sans-serif" font-size="16">Aggregation pipelines</text>
+  <text x="750" y="480" fill="#94a3b8" font-family="Arial,sans-serif" font-size="16">Mongoose ODM integration</text>
+</svg>
