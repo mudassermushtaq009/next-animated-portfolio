@@ -184,6 +184,55 @@ export const projects = [
     details:
       "Pure backend focused on data layer: complex aggregation pipelines for analytics, data validation, indexing strategies, and REST endpoints for CRUD. Includes background jobs with node-cron for data cleanup and reports.",
   },
+  // New E-commerce Projects for better client impression
+  {
+    id: 16,
+    title: "FashionHub - Modern E-commerce",
+    description:
+      "Full-featured fashion e-commerce platform with React frontend, product filtering, cart, wishlist, and secure checkout.",
+    tags: ["Next.js", "React", "Node.js", "MongoDB", "Stripe", "Tailwind"],
+    image: "/hero.png",
+    live: "#",
+    github: `${GITHUB}/fashionhub-ecommerce`,
+    details:
+      "Modern e-commerce website for fashion. Features include advanced product search, category filters, user auth, shopping cart with Redux, wishlist, order tracking, and Stripe payment integration. Responsive design with smooth animations. Backend built with Express and MongoDB for product and order management.",
+  },
+  {
+    id: 17,
+    title: "TechBazaar - Electronics Store",
+    description:
+      "Premium electronics e-commerce with React, real-time inventory, customer reviews, and seamless multi-payment options.",
+    tags: ["React", "Express", "MongoDB", "Redux", "Stripe", "Tailwind"],
+    image: "/slider/react-frontend.svg",
+    live: "#",
+    github: `${GITHUB}/techbazaar-ecommerce`,
+    details:
+      "Specialized e-commerce for gadgets and electronics. Includes product comparison, customer reviews with ratings, inventory management, coupon system, and secure payments via Stripe and PayPal. Built with MERN stack for high performance and scalability.",
+  },
+  {
+    id: 18,
+    title: "GreenMart - Grocery Delivery",
+    description:
+      "Online grocery e-commerce with React Native-inspired UI, real-time stock, subscription boxes, and fast checkout flow.",
+    tags: ["Next.js", "React", "Node.js", "MongoDB", "Tailwind", "Stripe"],
+    image: "/slider/mongodb-database.svg",
+    live: "#",
+    github: `${GITHUB}/greenmart-grocery`,
+    details:
+      "E-commerce platform for fresh groceries and daily essentials. Features include category browsing, smart search, cart with quantity management, delivery scheduling, and subscription for recurring orders. Secure payments and admin dashboard for inventory.",
+  },
+  {
+    id: 19,
+    title: "StyleCart - Luxury Fashion Store",
+    description:
+      "High-end fashion e-commerce website with elegant UI, virtual try-on simulation, and premium checkout experience.",
+    tags: ["Next.js", "React", "Express", "MongoDB", "Stripe", "Framer Motion"],
+    image: "/hero.png",
+    live: "#",
+    github: `${GITHUB}/stylecart-luxury`,
+    details:
+      "Premium e-commerce for luxury fashion. Highlights: beautiful product galleries, size guides, wishlist, saved addresses, and integrated Stripe checkout with order confirmation emails. Fully responsive with modern animations for an upscale shopping feel.",
+  },
 ];
 
 export const githubProfile = GITHUB;
