@@ -155,7 +155,7 @@ export const projects = [
       "Scalable RESTful API built with Express.js, MongoDB, and Mongoose. Features JWT auth, rate limiting, and full CRUD.",
     tags: ["Node.js", "Express", "MongoDB", "JWT", "REST API"],
     image: "/slider/node-express-api.svg",
-    live: "#",
+    live: demo("node-rest-api"),
     github: `${GITHUB}/node-rest-api`,
     details:
       "Pure backend REST API service with Express routes, Mongoose models, JWT authentication, input validation, error handling, and pagination. Designed to be consumed by any frontend or mobile app. Includes API documentation with Swagger.",
@@ -167,7 +167,7 @@ export const projects = [
       "Backend authentication microservice with secure JWT tokens, password hashing, refresh tokens, and email verification.",
     tags: ["Node.js", "Express", "JWT", "MongoDB", "Auth"],
     image: "/slider/mern-architecture.svg",
-    live: "#",
+    live: demo("express-auth-service"),
     github: `${GITHUB}/express-auth-service`,
     details:
       "Standalone authentication backend using Express, bcrypt for passwords, JWT with refresh tokens, Nodemailer for verification emails, and MongoDB for user storage. Supports login, register, forgot password, and protected routes middleware.",
@@ -179,7 +179,7 @@ export const projects = [
       "Backend data service with advanced MongoDB aggregations, Mongoose ODM, and scheduled jobs using Node.js.",
     tags: ["MongoDB", "Node.js", "Mongoose", "Aggregation", "API"],
     image: "/slider/mongodb-database.svg",
-    live: "#",
+    live: demo("mongodb-data-api"),
     github: `${GITHUB}/mongodb-data-api`,
     details:
       "Pure backend focused on data layer: complex aggregation pipelines for analytics, data validation, indexing strategies, and REST endpoints for CRUD. Includes background jobs with node-cron for data cleanup and reports.",
@@ -192,7 +192,7 @@ export const projects = [
       "Full-featured fashion e-commerce platform with React frontend, product filtering, cart, wishlist, and secure checkout.",
     tags: ["Next.js", "React", "Node.js", "MongoDB", "Stripe", "Tailwind"],
     image: "/hero.png",
-    live: "#",
+    live: demo("ecommerce-fashionhub"),
     github: `${GITHUB}/fashionhub-ecommerce`,
     details:
       "Modern e-commerce website for fashion. Features include advanced product search, category filters, user auth, shopping cart with Redux, wishlist, order tracking, and Stripe payment integration. Responsive design with smooth animations. Backend built with Express and MongoDB for product and order management.",
@@ -204,7 +204,7 @@ export const projects = [
       "Premium electronics e-commerce with React, real-time inventory, customer reviews, and seamless multi-payment options.",
     tags: ["React", "Express", "MongoDB", "Redux", "Stripe", "Tailwind"],
     image: "/slider/react-frontend.svg",
-    live: "#",
+    live: demo("ecommerce-techbazaar"),
     github: `${GITHUB}/techbazaar-ecommerce`,
     details:
       "Specialized e-commerce for gadgets and electronics. Includes product comparison, customer reviews with ratings, inventory management, coupon system, and secure payments via Stripe and PayPal. Built with MERN stack for high performance and scalability.",
@@ -216,7 +216,7 @@ export const projects = [
       "Online grocery e-commerce with React Native-inspired UI, real-time stock, subscription boxes, and fast checkout flow.",
     tags: ["Next.js", "React", "Node.js", "MongoDB", "Tailwind", "Stripe"],
     image: "/slider/mongodb-database.svg",
-    live: "#",
+    live: demo("ecommerce-greenmart"),
     github: `${GITHUB}/greenmart-grocery`,
     details:
       "E-commerce platform for fresh groceries and daily essentials. Features include category browsing, smart search, cart with quantity management, delivery scheduling, and subscription for recurring orders. Secure payments and admin dashboard for inventory.",
@@ -228,7 +228,7 @@ export const projects = [
       "High-end fashion e-commerce website with elegant UI, virtual try-on simulation, and premium checkout experience.",
     tags: ["Next.js", "React", "Express", "MongoDB", "Stripe", "Framer Motion"],
     image: "/hero.png",
-    live: "#",
+    live: demo("ecommerce-stylecart"),
     github: `${GITHUB}/stylecart-luxury`,
     details:
       "Premium e-commerce for luxury fashion. Highlights: beautiful product galleries, size guides, wishlist, saved addresses, and integrated Stripe checkout with order confirmation emails. Fully responsive with modern animations for an upscale shopping feel.",
