@@ -155,7 +155,7 @@ export const projects = [
       "Scalable RESTful API built with Express.js, MongoDB, and Mongoose. Features JWT auth, rate limiting, and full CRUD.",
     tags: ["Node.js", "Express", "MongoDB", "JWT", "REST API"],
     image: "/slider/node-express-api.svg",
-    live: demo("node-rest-api"),
+    live: "#",
     github: `${GITHUB}/node-rest-api`,
     details:
       "Pure backend REST API service with Express routes, Mongoose models, JWT authentication, input validation, error handling, and pagination. Designed to be consumed by any frontend or mobile app. Includes API documentation with Swagger.",
@@ -167,7 +167,7 @@ export const projects = [
       "Backend authentication microservice with secure JWT tokens, password hashing, refresh tokens, and email verification.",
     tags: ["Node.js", "Express", "JWT", "MongoDB", "Auth"],
     image: "/slider/mern-architecture.svg",
-    live: demo("express-auth-service"),
+    live: "#",
     github: `${GITHUB}/express-auth-service`,
     details:
       "Standalone authentication backend using Express, bcrypt for passwords, JWT with refresh tokens, Nodemailer for verification emails, and MongoDB for user storage. Supports login, register, forgot password, and protected routes middleware.",
@@ -179,7 +179,7 @@ export const projects = [
       "Backend data service with advanced MongoDB aggregations, Mongoose ODM, and scheduled jobs using Node.js.",
     tags: ["MongoDB", "Node.js", "Mongoose", "Aggregation", "API"],
     image: "/slider/mongodb-database.svg",
-    live: demo("mongodb-data-api"),
+    live: "#",
     github: `${GITHUB}/mongodb-data-api`,
     details:
       "Pure backend focused on data layer: complex aggregation pipelines for analytics, data validation, indexing strategies, and REST endpoints for CRUD. Includes background jobs with node-cron for data cleanup and reports.",
@@ -187,51 +187,51 @@ export const projects = [
   // New E-commerce Projects for better client impression
   {
     id: 16,
-    title: "FashionHub - Modern E-commerce",
+    title: "FashionHub",
     description:
-      "Full-featured fashion e-commerce platform with React frontend, product filtering, cart, wishlist, and secure checkout.",
-    tags: ["Next.js", "React", "Node.js", "MongoDB", "Stripe", "Tailwind"],
-    image: "/hero.png",
+      "Premium fashion e-commerce with AI recommendations, virtual try-on, seamless checkout, and global shipping.",
+    tags: ["Next.js", "React", "Stripe", "Tailwind", "Framer Motion"],
+    image: "https://picsum.photos/id/1011/600/400",
     live: demo("ecommerce-fashionhub"),
     github: `${GITHUB}/fashionhub-ecommerce`,
     details:
-      "Modern e-commerce website for fashion. Features include advanced product search, category filters, user auth, shopping cart with Redux, wishlist, order tracking, and Stripe payment integration. Responsive design with smooth animations. Backend built with Express and MongoDB for product and order management.",
+      "A high-end fashion destination featuring AI-powered recommendations, 3D virtual try-on, one-click checkout with Apple Pay/Google Pay, and curated collections from top designers. Built with Next.js App Router, server components, and a blazing fast edge API.",
   },
   {
     id: 17,
-    title: "TechBazaar - Electronics Store",
+    title: "TechBazaar",
     description:
-      "Premium electronics e-commerce with React, real-time inventory, customer reviews, and seamless multi-payment options.",
-    tags: ["React", "Express", "MongoDB", "Redux", "Stripe", "Tailwind"],
-    image: "/slider/react-frontend.svg",
+      "Curated electronics marketplace with real-time stock, expert reviews, and subscription plans.",
+    tags: ["Next.js", "React", "Stripe", "MongoDB", "Tailwind"],
+    image: "https://picsum.photos/id/160/600/400",
     live: demo("ecommerce-techbazaar"),
     github: `${GITHUB}/techbazaar-ecommerce`,
     details:
-      "Specialized e-commerce for gadgets and electronics. Includes product comparison, customer reviews with ratings, inventory management, coupon system, and secure payments via Stripe and PayPal. Built with MERN stack for high performance and scalability.",
+      "Premium electronics store with live inventory, detailed spec comparisons, verified customer reviews, and flexible subscription options for accessories. Features a powerful admin dashboard and instant order notifications.",
   },
   {
     id: 18,
-    title: "GreenMart - Grocery Delivery",
+    title: "GreenMart",
     description:
-      "Online grocery e-commerce with React Native-inspired UI, real-time stock, subscription boxes, and fast checkout flow.",
-    tags: ["Next.js", "React", "Node.js", "MongoDB", "Tailwind", "Stripe"],
-    image: "/slider/mongodb-database.svg",
+      "Sustainable grocery platform with farm-direct sourcing, smart baskets, and carbon-neutral delivery.",
+    tags: ["Next.js", "React", "Stripe", "Tailwind", "MongoDB"],
+    image: "https://picsum.photos/id/292/600/400",
     live: demo("ecommerce-greenmart"),
     github: `${GITHUB}/greenmart-grocery`,
     details:
-      "E-commerce platform for fresh groceries and daily essentials. Features include category browsing, smart search, cart with quantity management, delivery scheduling, and subscription for recurring orders. Secure payments and admin dashboard for inventory.",
+      "Zero-waste grocery e-commerce connecting customers directly with local farms. Features smart basket builder, seasonal recommendations, carbon tracking, and contactless delivery with reusable packaging.",
   },
   {
     id: 19,
-    title: "StyleCart - Luxury Fashion Store",
+    title: "StyleCart",
     description:
-      "High-end fashion e-commerce website with elegant UI, virtual try-on simulation, and premium checkout experience.",
-    tags: ["Next.js", "React", "Express", "MongoDB", "Stripe", "Framer Motion"],
-    image: "/hero.png",
+      "Ultra-luxury fashion house with private client services, exclusive drops, and white-glove experience.",
+    tags: ["Next.js", "React", "Framer Motion", "Stripe", "Tailwind"],
+    image: "https://picsum.photos/id/1005/600/400",
     live: demo("ecommerce-stylecart"),
     github: `${GITHUB}/stylecart-luxury`,
     details:
-      "Premium e-commerce for luxury fashion. Highlights: beautiful product galleries, size guides, wishlist, saved addresses, and integrated Stripe checkout with order confirmation emails. Fully responsive with modern animations for an upscale shopping feel.",
+      "The pinnacle of digital luxury retail. Features private client portals, limited edition drops, personal styling AI, and seamless high-value checkout. Every detail crafted for the most discerning customers.",
   },
 ];
 
