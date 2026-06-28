@@ -1,63 +1,608 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FashionHub | Live Demo</title>
-  <style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#09090b;--panel:#18181b;--border:#27272a;--text:#e4e4e7;--muted:#a1a1aa;--accent:#6366f1;--accent2:#818cf8;--ok:#34d399}
-body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5}
-a{color:var(--accent2);text-decoration:none}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.25rem;border-bottom:1px solid var(--border);background:rgba(9,9,11,.92);position:sticky;top:0;z-index:10;backdrop-filter:blur(8px)}
-.brand{font-weight:700;letter-spacing:-.03em}
-.badge{font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:#a5b4fc;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.35);padding:.25rem .6rem;border-radius:999px}
-.wrap{max-width:960px;margin:0 auto;padding:1.5rem}
-.hero{margin-bottom:1.25rem}
-.hero h1{font-size:clamp(1.6rem,4vw,2.2rem);letter-spacing:-.04em;margin-bottom:.35rem}
-.hero p{color:var(--muted);max-width:60ch}
-.panel{background:var(--panel);border:1px solid var(--border);border-radius:1rem;padding:1rem}
-.grid{display:grid;gap:.75rem}
-.row{display:flex;gap:.6rem;flex-wrap:wrap}
-input,textarea,select,button{font:inherit}
-input,textarea,select{width:100%;background:#0f0f12;border:1px solid var(--border);color:var(--text);border-radius:.75rem;padding:.7rem .85rem}
-input:focus,textarea:focus,select:focus{outline:2px solid rgba(99,102,241,.45);border-color:var(--accent)}
-button{cursor:pointer;border:none;border-radius:.75rem;padding:.65rem 1rem;font-weight:600}
-.btn-primary{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff}
-.btn-secondary{background:#27272a;color:#e4e4e7;border:1px solid #3f3f46}
-.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
-.item{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.8rem .9rem;border:1px solid var(--border);border-radius:.85rem;background:#111114}
-.item h3{font-size:1rem}
-.item p,.meta{color:var(--muted);font-size:.86rem}
-.tag{display:inline-block;font-size:.72rem;padding:.15rem .5rem;border-radius:999px;background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.25);color:#c7d2fe;margin-right:.35rem}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-bottom:1rem}
-.stat{padding:.9rem;border:1px solid var(--border);border-radius:.85rem;background:#111114}
-.stat strong{display:block;font-size:1.35rem}
-@media (max-width:640px){.row>*{flex:1 1 100%}}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FashionHub • Premium Fashion</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#0a0a0a;--panel:#121212;--border:#262626;--text:#f5f5f5;--muted:#888;--accent:#e11d48;--accent2:#fda4af}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+a{color:inherit;text-decoration:none}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.75rem;border-bottom:1px solid var(--border);background:rgba(10,10,10,.96);position:sticky;top:0;z-index:200;backdrop-filter:blur(12px)}
+.brand{font-weight:800;font-size:1.35rem;letter-spacing:-1.5px}
+.nav{display:flex;gap:1.75rem;font-size:.95rem;color:#ccc}
+.nav a:hover{color:#fff}
+.hero{min-height:480px;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem;background:linear-gradient(rgba(0,0,0,.68),rgba(0,0,0,.55)),url('https://picsum.photos/id/1011/2000/1200') center/cover}
+.hero h1{font-size:3.6rem;font-weight:800;margin-bottom:.4rem;letter-spacing:-2px}
+.hero p{max-width:480px;margin:0 auto 1.4rem;font-size:1.1rem;opacity:.9}
+.section{max-width:1280px;margin:0 auto;padding:2.5rem 1.5rem}
+.section h2{font-size:1.65rem;margin-bottom:1.25rem;letter-spacing:-.5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:1.25rem}
+.product{position:relative;background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .25s}
+.product:hover{transform:translateY(-6px);box-shadow:0 20px 25px -5px rgb(0 0 0 / .2)}
+.product img{width:100%;height:230px;object-fit:cover;display:block;transition:transform .4s}
+.product:hover img{transform:scale(1.06)}
+.badge-pos{position:absolute;top:12px;left:12px;background:#111;color:#fff;font-size:.7rem;padding:2px 9px;border-radius:999px;border:1px solid #333}
+.product-info{padding:.95rem 1rem 1.1rem}
+.product-info h4{font-size:1.02rem;margin-bottom:.15rem}
+.product-info .price{font-weight:700;color:var(--accent2);font-size:1.1rem}
+.product-info .meta{font-size:.78rem;color:var(--muted);margin-top:2px}
+.rating{font-size:.8rem;color:#facc15;margin-top:4px}
+.filters{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.filter{padding:7px 15px;border:1px solid var(--border);border-radius:999px;font-size:.82rem;background:transparent;color:#aaa;cursor:pointer;transition:all .2s}
+.filter:hover{border-color:#444;color:#ddd}
+.filter.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.searchbar{flex:1;min-width:220px;background:#111;border:1px solid var(--border);border-radius:999px;padding:.5rem 1rem;display:flex;align-items:center;gap:.5rem}
+.searchbar input{flex:1;background:transparent;border:none;color:#fff;font-size:.95rem;outline:none}
+.sort select{background:#111;color:#ddd;border:1px solid var(--border);padding:.45rem .8rem;border-radius:8px;font-size:.85rem}
+.cart-btn{position:fixed;bottom:22px;right:22px;background:#fff;color:#111;padding:13px 22px;border-radius:999px;box-shadow:0 10px 15px -3px rgb(0 0 0 / .35);font-size:.92rem;font-weight:700;display:flex;align-items:center;gap:8px;z-index:210;cursor:pointer}
+.cart-btn span{background:#111;color:#fff;border-radius:999px;padding:1px 7px;font-size:.75rem;margin-left:3px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;z-index:300;padding:1rem}
+.modal-content{background:#111;border:1px solid #333;max-width:860px;width:100%;border-radius:18px;overflow:hidden}
+.modal-body{display:flex;gap:0;flex-wrap:wrap}
+.modal-img{flex:1;min-width:300px;background:#000}
+.modal-img img{width:100%;height:100%;object-fit:cover;min-height:320px;display:block}
+.modal-detail{flex:1;padding:1.75rem;min-width:280px}
+.modal-detail h3{font-size:1.45rem;margin-bottom:.35rem}
+.price-big{font-size:1.85rem;font-weight:800;color:#fda4af}
+.options{margin:1rem 0}
+.opt-btn{padding:6px 13px;border:1px solid #444;border-radius:6px;background:transparent;color:#ddd;margin-right:6px;margin-bottom:6px;cursor:pointer;font-size:.85rem}
+.opt-btn.active{border-color:#e11d48;color:#fff}
+.toast{position:fixed;bottom:75px;left:50%;transform:translateX(-50%);background:#1f1f1f;color:#fff;padding:.6rem 1.15rem;border-radius:999px;font-size:.9rem;box-shadow:0 8px 20px rgb(0 0 0/.4);display:none;z-index:400}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:380px;max-width:92vw;background:#111;border-left:1px solid #333;z-index:320;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column}
+.drawer.open{transform:translateX(0)}
+.drawer-header{padding:1.1rem 1.25rem;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center;font-weight:700}
+.cart-list{flex:1;overflow:auto;padding:1rem}
+.cart-item{display:flex;gap:.85rem;padding:.75rem 0;border-bottom:1px solid #222}
+.cart-item img{width:58px;height:58px;object-fit:cover;border-radius:8px}
+.cart-controls{display:flex;align-items:center;gap:8px;margin-top:4px}
+.cart-controls button{width:26px;height:26px;border-radius:50%;border:1px solid #444;background:#222;color:#ddd;font-size:1rem;line-height:1}
+.checkout-bar{padding:1rem;border-top:1px solid #333;background:#0a0a0a}
+.stat{display:inline-flex;align-items:center;gap:4px;background:#1a1a1a;padding:.3rem .75rem;border-radius:999px;font-size:.82rem}
+.review{border:1px solid #222;background:#0f0f0f;padding:1rem;border-radius:12px;margin-bottom:.75rem}
+.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+input,select,button{font:inherit}
+.btn{display:inline-block;padding:12px 28px;border-radius:999px;font-weight:700;font-size:.95rem;background:var(--accent);color:white;border:none;cursor:pointer;transition:.2s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 15px -4px rgb(225 29 72 / .35)}
+.btn-ghost{background:transparent;color:#ccc;border:1px solid #444;padding:.55rem 1rem;border-radius:999px;font-size:.85rem}
+.btn-secondary{background:#222;color:#eee;border:1px solid #444}
+@media (max-width:700px){.modal-body{flex-direction:column}.drawer{width:100%}}
 </style>
 </head>
-<body>
-  <header class="topbar">
+<body style="background:#0a0a0a;color:#f5f5f5">
+
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:1.5rem">
     <div class="brand">FashionHub</div>
-    <div style="display:flex;gap:.5rem;align-items:center">
-      <span class="badge">Live Demo</span>
-      <a href="/" class="btn-ghost" style="padding:.45rem .75rem;border-radius:.65rem">← Portfolio</a>
+    <div class="nav">
+      <a href="#shop">Shop</a>
+      <a href="#collections">Collections</a>
+      <a href="#about">Journal</a>
     </div>
-  </header>
-  <main class="wrap">
-    <section class="hero">
-      <h1>FashionHub - Luxury Fashion</h1>
-      <p>Browse premium fashion with advanced filters, cart, wishlist and secure Stripe checkout.</p>
-    </section>
-    <section class="panel"><div class="stats"><div class="stat"><strong id="cartCount">0</strong><span class="meta">items in cart</span></div><div class="stat"><strong id="cartTotal">$ 0</strong><span class="meta">cart total</span></div></div><div id="grid" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))"><div class="item" style="flex-direction:column;align-items:flex-start"><span class="tag">Outerwear</span><h3>Italian Leather Jacket</h3><p class="meta">$ 890</p><button class="btn-primary" data-add="Italian Leather Jacket">Add to cart</button></div><div class="item" style="flex-direction:column;align-items:flex-start"><span class="tag">Dresses</span><h3>Silk Evening Dress</h3><p class="meta">$ 450</p><button class="btn-primary" data-add="Silk Evening Dress">Add to cart</button></div></div></section>
-    <p class="footer-note">Interactive UI preview · Built with MERN stack · <a href="https://github.com/mudassermushtaq009" target="_blank" rel="noopener noreferrer">View source on GitHub</a></p>
-  </main>
-  <script>
-      const products = [{"n":"Italian Leather Jacket","p":890,"c":"Outerwear"},{"n":"Silk Evening Dress","p":450,"c":"Dresses"}];
-      let cart=[];
-      const grid=document.getElementById('grid');
-      const render=()=>{grid.innerHTML=products.map(p=>`<div class="item" style="flex-direction:column;align-items:flex-start"><span class="tag">${p.c}</span><h3>${p.n}</h3><p class="meta">$ ${p.p}</p><button class="btn-primary" data-add="${p.n}">Add to cart</button></div>`).join('');document.getElementById('cartCount').textContent=cart.length;document.getElementById('cartTotal').textContent='$ '+cart.reduce((s,i)=>s+i.p,0);};
-      grid.onclick=e=>{const name=e.target.dataset.add;if(!name)return;const p=products.find(x=>x.n===name);if(p){cart.push(p);render();}};
-      render();
-  </script>
+  </div>
+  <div style="display:flex;gap:.6rem;align-items:center">
+    <div class="searchbar">
+      <span>🔎</span>
+      <input id="searchInput" placeholder="Search coats, dresses, shoes..." onkeyup="filterProducts()">
+    </div>
+    <a href="/" class="btn-ghost">← Portfolio</a>
+    <button onclick="showCart()" class="btn-ghost" style="display:flex;align-items:center;gap:6px;padding:.55rem .9rem">
+      Cart <span id="navCartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <div>
+    <div style="display:inline-block;background:#e11d4822;color:#fda4af;border:1px solid #e11d4833;padding:3px 14px;border-radius:999px;font-size:.75rem;margin-bottom:12px;letter-spacing:1px">NEW SEASON 2025</div>
+    <h1>FashionHub</h1>
+    <p>Timeless pieces. Modern silhouettes.<br>Worldwide shipping. 30-day returns.</p>
+    <button class="btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})" >Explore Collection</button>
+  </div>
+</div>
+
+<!-- Trust bar -->
+<div style="max-width:1280px;margin:-1.3rem auto 0;padding:0 1.5rem">
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;background:#111;border:1px solid #222;border-radius:999px;padding:.6rem 1.5rem;font-size:.8rem">
+    <span class="stat">🚚 Free shipping over $150</span>
+    <span class="stat">🔄 30-day returns</span>
+    <span class="stat">🛡️ 2-year warranty</span>
+    <span class="stat">🌍 Ships to 120 countries</span>
+  </div>
+</div>
+
+<!-- Shop Section -->
+<div class="section" id="shop">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <div>
+      <h2 style="margin-bottom:4px">Featured Collection</h2>
+      <div style="color:#777;font-size:.85rem">32 pieces • Curated by our stylists</div>
+    </div>
+    <div style="display:flex;gap:.5rem;align-items:center">
+      <div class="sort">
+        <select id="sortSelect" onchange="filterProducts()">
+          <option value="popular">Sort: Popular</option>
+          <option value="price-low">Price: Low to High</option>
+          <option value="price-high">Price: High to Low</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <div onclick="setFilter(this, 'all')" class="filter active">All</div>
+    <div onclick="setFilter(this, 'coats')" class="filter">Coats</div>
+    <div onclick="setFilter(this, 'dresses')" class="filter">Dresses</div>
+    <div onclick="setFilter(this, 'knitwear')" class="filter">Knitwear</div>
+    <div onclick="setFilter(this, 'footwear')" class="filter">Footwear</div>
+    <div onclick="setFilter(this, 'accessories')" class="filter">Accessories</div>
+  </div>
+
+  <div id="productGrid" class="grid"></div>
+</div>
+
+<!-- Collections -->
+<div class="section" id="collections" style="background:#111;border:1px solid #222;border-radius:18px;margin:1.5rem auto;padding:2.25rem 1.75rem">
+  <h2>Shop by Collection</h2>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+    <div onclick="quickFilter('coats')" style="background:#1a1a1a;border-radius:12px;padding:1.1rem;cursor:pointer">
+      <div style="height:110px;background:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.3)),url('https://picsum.photos/id/1005/600/400') center/cover;border-radius:8px;margin-bottom:.6rem"></div>
+      <div style="font-weight:700">Winter Outerwear</div>
+      <div style="font-size:.8rem;color:#888">14 pieces</div>
+    </div>
+    <div onclick="quickFilter('dresses')" style="background:#1a1a1a;border-radius:12px;padding:1.1rem;cursor:pointer">
+      <div style="height:110px;background:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.3)),url('https://picsum.photos/id/1009/600/400') center/cover;border-radius:8px;margin-bottom:.6rem"></div>
+      <div style="font-weight:700">Signature Dresses</div>
+      <div style="font-size:.8rem;color:#888">9 pieces</div>
+    </div>
+    <div onclick="quickFilter('knitwear')" style="background:#1a1a1a;border-radius:12px;padding:1.1rem;cursor:pointer">
+      <div style="height:110px;background:linear-gradient(rgba(0,0,0,.1),rgba(0,0,0,.3)),url('https://picsum.photos/id/201/600/400') center/cover;border-radius:8px;margin-bottom:.6rem"></div>
+      <div style="font-weight:700">Cashmere Knits</div>
+      <div style="font-size:.8rem;color:#888">11 pieces</div>
+    </div>
+  </div>
+</div>
+
+<!-- About / Values -->
+<div class="section" id="about">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.25rem;align-items:center">
+    <div>
+      <div style="display:inline-block;padding:2px 11px;background:#e11d4811;color:#fda4af;border-radius:99px;font-size:.73rem">OUR PROMISE</div>
+      <h2 style="font-size:1.9rem;margin:12px 0 12px">Crafted with intention.<br>Designed to last.</h2>
+      <p style="color:#999;max-width:42ch">Every piece is sourced from the finest mills and ateliers around the world. We believe in quality over quantity.</p>
+      <div style="margin-top:1.25rem;display:flex;gap:.6rem;flex-wrap:wrap">
+        <div class="btn-ghost" style="font-size:.82rem">Sustainability Report →</div>
+        <div class="btn-ghost" style="font-size:.82rem">See Our Makers →</div>
+      </div>
+    </div>
+    <div class="test-grid">
+      <div class="review">
+        <div style="color:#facc15">★★★★★</div>
+        <div style="font-size:.9rem;margin:6px 0">"The cashmere coat is the best piece I own. Fits perfectly and feels incredible."</div>
+        <div style="font-size:.75rem;color:#777">— Sofia Patel, London</div>
+      </div>
+      <div class="review">
+        <div style="color:#facc15">★★★★★</div>
+        <div style="font-size:.9rem;margin:6px 0">"Incredible quality. Shipping was faster than expected and the packaging was beautiful."</div>
+        <div style="font-size:.75rem;color:#777">— Marcus Rivera, NYC</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Newsletter -->
+<div class="section" style="text-align:center">
+  <div style="max-width:420px;margin:0 auto;background:#111;border:1px solid #333;border-radius:16px;padding:1.75rem 2rem">
+    <h3 style="margin-bottom:.3rem">Get early access to new drops</h3>
+    <p style="font-size:.85rem;color:#888;margin-bottom:1rem">Join 38k+ members. No spam, ever.</p>
+    <div style="display:flex;gap:.5rem">
+      <input id="emailInput" placeholder="your@email.com" style="flex:1;padding:.65rem .9rem;background:#0a0a0a;border:1px solid #333;border-radius:8px;color:#fff">
+      <button onclick="subscribe()" class="btn" style="padding:.65rem 1.6rem">Join</button>
+    </div>
+  </div>
+</div>
+
+<footer style="text-align:center;padding:2rem 1rem;color:#555;font-size:.82rem;border-top:1px solid #222;margin-top:2rem">
+  © 2025 FashionHub — Premium fashion built with Next.js + MERN • <span style="color:#e11d48">Interactive Demo</span>
+</footer>
+
+<!-- Product Modal -->
+<div id="modal" class="modal" onclick="if (event.target.id==='modal') closeModal()">
+  <div class="modal-content" onclick="event.stopImmediatePropagation()">
+    <div class="modal-body">
+      <div class="modal-img" id="modalImg"></div>
+      <div class="modal-detail">
+        <div id="modalBadge" style="font-size:.72rem;padding:2px 9px;border-radius:999px;background:#e11d4822;color:#fda4af;display:inline-block;margin-bottom:8px"></div>
+        <h3 id="modalName"></h3>
+        <div class="price-big" id="modalPrice"></div>
+        <div style="margin:6px 0 12px" id="modalRating"></div>
+        
+        <div class="options">
+          <div style="font-size:.78rem;color:#888;margin-bottom:4px">Size</div>
+          <div id="sizeOptions"></div>
+        </div>
+        <div class="options">
+          <div style="font-size:.78rem;color:#888;margin-bottom:4px">Color</div>
+          <div id="colorOptions"></div>
+        </div>
+
+        <div style="display:flex;gap:8px;align-items:center;margin:1rem 0 1.25rem">
+          <div style="font-size:.8rem;color:#888">Quantity</div>
+          <div style="display:flex;border:1px solid #444;border-radius:999px">
+            <button onclick="changeQty(-1)" style="padding:0 12px;border:none;background:#222;color:#ddd;border-radius:999px 0 0 999px">-</button>
+            <div id="qtyVal" style="padding:4px 17px;font-weight:600">1</div>
+            <button onclick="changeQty(1)" style="padding:0 12px;border:none;background:#222;color:#ddd;border-radius:0 999px 999px 0">+</button>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:.6rem">
+          <button onclick="addCurrentToCart()" class="btn" style="flex:1">Add to Cart</button>
+          <button onclick="buyNow()" class="btn-ghost" style="flex:1;border-color:#e11d48;color:#fda4af">Buy Now</button>
+        </div>
+        <div id="modalDesc" style="margin-top:1rem;font-size:.9rem;color:#aaa;line-height:1.45"></div>
+        <div onclick="closeModal()" style="margin-top:1.4rem;font-size:.8rem;color:#666;cursor:pointer">← Close</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cart Drawer -->
+<div id="cartDrawer" class="drawer">
+  <div class="drawer-header">
+    <span>Your Cart <span id="drawerCount" style="color:#e11d48"></span></span>
+    <button onclick="hideCart()" class="btn-ghost" style="padding:.2rem .6rem">✕</button>
+  </div>
+  <div id="cartList" class="cart-list"></div>
+  <div class="checkout-bar">
+    <div style="display:flex;justify-content:space-between;font-size:1.05rem;margin-bottom:.7rem">
+      <span>Subtotal</span>
+      <span id="cartTotal" style="font-weight:800"></span>
+    </div>
+    <button onclick="checkout()" class="btn" style="width:100%;padding:13px 0">Proceed to Checkout</button>
+    <button onclick="clearCart()" style="width:100%;margin-top:.5rem;background:transparent;color:#777;border:none;font-size:.8rem;cursor:pointer">Clear cart</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="toast"></div>
+
+<script>
+// Products data - FashionHub
+const products = [
+  {id:1, name:"Cashmere Wool Coat", price:289, category:"coats", img:"https://picsum.photos/id/1005/600/700", rating:4.9, badge:"Bestseller", desc:"Premium Italian cashmere blend with a soft brushed interior. Tailored fit, timeless silhouette."},
+  {id:2, name:"Silk Slip Dress", price:145, category:"dresses", img:"https://picsum.photos/id/1009/600/700", rating:4.8, badge:"New", desc:"Lustrous 100% silk midi slip dress. Bias cut for beautiful drape. Perfect for evenings."},
+  {id:3, name:"Leather Chelsea Boots", price:210, category:"footwear", img:"https://picsum.photos/id/201/600/700", rating:4.7, badge:"", desc:"Handcrafted full-grain calf leather boots. Goodyear welted. Comfortable from day one."},
+  {id:4, name:"Oversized Merino Sweater", price:125, category:"knitwear", img:"https://picsum.photos/id/160/600/700", rating:4.6, badge:"Bestseller", desc:"Ultra-soft Australian merino wool in a relaxed oversized fit. Perfect layering piece."},
+  {id:5, name:"Wool Trench Coat", price:345, category:"coats", img:"https://picsum.photos/id/251/600/700", rating:4.9, badge:"New", desc:"Double-breasted belted trench in premium Italian wool. Timeless elegance for any season."},
+  {id:6, name:"Satin Midi Slip Dress", price:98, category:"dresses", img:"https://picsum.photos/id/29/600/700", rating:4.5, badge:"", desc:"Fluid satin dress featuring delicate spaghetti straps and flattering bias cut."},
+  {id:7, name:"Suede Chelsea Boots", price:175, category:"footwear", img:"https://picsum.photos/id/312/600/700", rating:4.4, badge:"Bestseller", desc:"Premium suede upper with leather lining. Refined last with a comfortable rubber sole."},
+  {id:8, name:"Cashmere Turtleneck", price:135, category:"knitwear", img:"https://picsum.photos/id/1006/600/700", rating:4.8, badge:"", desc:"Ribbed 12-gauge cashmere turtleneck. Exceptionally soft and warm for winter."},
+  {id:9, name:"Structured Wool Blazer", price:265, category:"coats", img:"https://picsum.photos/id/106/600/700", rating:4.7, badge:"New", desc:"Tailored single-breasted blazer in premium wool flannel. Sharp structured shoulders."},
+  {id:10, name:"Leather Crossbody Bag", price:165, category:"accessories", img:"https://picsum.photos/id/180/600/700", rating:4.9, badge:"Bestseller", desc:"Luxury full-grain leather crossbody. Minimal hardware. Fits iPad & essentials."},
+  {id:11, name:"Linen Blend Shirt Dress", price:115, category:"dresses", img:"https://picsum.photos/id/201/600/700", rating:4.3, badge:"", desc:"Breathable linen-cotton blend with a relaxed shirt dress silhouette. Perfect for summer."},
+  {id:12, name:"Alpaca Wool Scarf", price:68, category:"accessories", img:"https://picsum.photos/id/1033/600/700", rating:4.8, badge:"New", desc:"Ultra-soft baby alpaca scarf. Generous size. Available in 5 signature hues."}
+];
+
+let cart = [];
+let currentProduct = null;
+let currentFilter = 'all';
+let currentQty = 1;
+
+// Render products
+function renderProducts(list) {
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = list.map(p => `
+    <div class="product" onclick="openModal(${p.id})">
+      <img src="${p.img}" alt="${p.name}">
+      ${p.badge ? `<div class="badge-pos">${p.badge}</div>` : ''}
+      <div class="product-info">
+        <h4>${p.name}</h4>
+        <div class="price">$${p.price}</div>
+        <div class="meta">${p.category.charAt(0).toUpperCase() + p.category.slice(1)} • Free shipping</div>
+        <div class="rating">★ ${p.rating} <span style="color:#666">(${Math.floor(Math.random()*70)+30})</span></div>
+        <button onclick="event.stopImmediatePropagation(); quickAdd(${p.id})" style="margin-top:.6rem;background:#1f1f1f;color:#ddd;font-size:.78rem;border:none;padding:7px 14px;border-radius:999px;cursor:pointer">+ Quick Add</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterProducts() {
+  const term = (document.getElementById('searchInput').value || '').toLowerCase();
+  const sortMode = document.getElementById('sortSelect').value;
+
+  let filtered = products.filter(p => {
+    const matchesCat = currentFilter === 'all' || p.category === currentFilter;
+    const matchesTerm = p.name.toLowerCase().includes(term) || p.category.includes(term);
+    return matchesCat && matchesTerm;
+  });
+
+  // Sorting
+  if (sortMode === 'price-low') filtered.sort((a,b) => a.price - b.price);
+  else if (sortMode === 'price-high') filtered.sort((a,b) => b.price - a.price);
+  else filtered.sort((a,b) => b.rating - a.rating); // popular by rating
+
+  renderProducts(filtered);
+}
+
+function setFilter(el, cat) {
+  document.querySelectorAll('.filter').forEach(f => f.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter = cat;
+  filterProducts();
+}
+
+function quickFilter(cat) {
+  document.getElementById('shop').scrollIntoView({behavior:'smooth'});
+  setTimeout(() => {
+    document.querySelectorAll('.filter').forEach(f => f.classList.remove('active'));
+    const target = [...document.querySelectorAll('.filter')].find(f => f.textContent.toLowerCase().includes(cat.slice(0,3)) || (cat==='coats' && f.textContent==='Coats'));
+    if (target) target.classList.add('active');
+    currentFilter = cat;
+    filterProducts();
+  }, 450);
+}
+
+function quickAdd(id) {
+  const p = products.find(x => x.id === id);
+  addToCart(p);
+}
+
+function openModal(id) {
+  currentProduct = products.find(x => x.id === id);
+  currentQty = 1;
+  
+  document.getElementById('modalImg').innerHTML = `<img src="${currentProduct.img}" style="width:100%;height:100%;object-fit:cover">`;
+  document.getElementById('modalName').textContent = currentProduct.name;
+  document.getElementById('modalPrice').textContent = '$' + currentProduct.price;
+  document.getElementById('modalRating').innerHTML = `★ ${currentProduct.rating} <span style="font-size:.85rem;color:#666">/ 5.0</span>`;
+  document.getElementById('modalBadge').textContent = currentProduct.badge || 'Premium';
+  document.getElementById('modalDesc').textContent = currentProduct.desc;
+  document.getElementById('qtyVal').textContent = currentQty;
+
+  // Size options
+  const sizes = (currentProduct.category === 'footwear') ? ['38','39','40','41','42'] : ['XS','S','M','L','XL'];
+  document.getElementById('sizeOptions').innerHTML = sizes.map((s,i) => 
+    `<span onclick="selectOption(this,'size')" class="opt-btn${i===2?' active':''}">${s}</span>`
+  ).join('');
+
+  // Color options
+  const colors = ['Black','Camel','Ivory','Navy'];
+  document.getElementById('colorOptions').innerHTML = colors.map((c,i) => 
+    `<span onclick="selectOption(this,'color')" class="opt-btn${i===0?' active':''}">${c}</span>`
+  ).join('');
+
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function selectOption(el, type) {
+  [...el.parentElement.children].forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function changeQty(delta) {
+  currentQty = Math.max(1, currentQty + delta);
+  document.getElementById('qtyVal').textContent = currentQty;
+}
+
+function addCurrentToCart() {
+  if (!currentProduct) return;
+  addToCart(currentProduct, currentQty);
+  closeModal();
+}
+
+function buyNow() {
+  if (!currentProduct) return;
+  addToCart(currentProduct, currentQty);
+  closeModal();
+  setTimeout(() => {
+    showCart();
+    setTimeout(checkout, 650);
+  }, 350);
+}
+
+function addToCart(product, qty = 1) {
+  const existing = cart.findIndex(i => i.id === product.id);
+  if (existing > -1) {
+    cart[existing].qty += qty;
+  } else {
+    cart.push({...product, qty});
+  }
+  updateCartCount();
+  showToast(`${product.name} added to cart`);
+  // pulse the cart button
+  const c = document.querySelector('.cart-btn') || document.querySelector('[onclick="showCart()"]');
+  if (c) { c.style.transform = 'scale(1.06)'; setTimeout(()=>c.style.transform='', 180); }
+}
+
+function updateCartCount() {
+  const count = cart.reduce((sum,i) => sum + i.qty, 0);
+  const nav = document.getElementById('navCartCount');
+  if (nav) nav.textContent = count;
+}
+
+function showCart() {
+  const drawer = document.getElementById('cartDrawer');
+  drawer.classList.add('open');
+  renderCart();
+}
+
+function hideCart() {
+  document.getElementById('cartDrawer').classList.remove('open');
+}
+
+function renderCart() {
+  const list = document.getElementById('cartList');
+  const totalEl = document.getElementById('cartTotal');
+  const dCount = document.getElementById('drawerCount');
+
+  if (!cart.length) {
+    list.innerHTML = `<div style="padding:3rem 1rem;text-align:center;color:#777">Your cart is empty<br><button onclick="hideCart()" class="btn-ghost" style="margin-top:1rem">Continue shopping</button></div>`;
+    totalEl.textContent = '$0';
+    dCount.textContent = '';
+    return;
+  }
+
+  list.innerHTML = cart.map((item, index) => `
+    <div class="cart-item">
+      <img src="${item.img}" alt="">
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:.95rem">${item.name}</div>
+        <div style="color:#e11d48;font-weight:700">$${item.price}</div>
+        <div class="cart-controls">
+          <button onclick="changeCartQty(${index}, -1)">−</button>
+          <span style="min-width:24px;text-align:center;font-size:.9rem">${item.qty}</span>
+          <button onclick="changeCartQty(${index}, 1)">+</button>
+          <button onclick="removeFromCart(${index})" style="margin-left:10px;color:#e11d48;border:none;background:transparent">Remove</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  const total = cart.reduce((s,i) => s + i.price * i.qty, 0);
+  totalEl.textContent = '$' + total;
+  dCount.textContent = '(' + cart.length + ')';
+}
+
+function changeCartQty(index, delta) {
+  cart[index].qty = Math.max(1, cart[index].qty + delta);
+  renderCart();
+  updateCartCount();
+}
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  renderCart();
+  updateCartCount();
+}
+
+function clearCart() {
+  cart = [];
+  renderCart();
+  updateCartCount();
+  hideCart();
+}
+
+function checkout() {
+  hideCart();
+  const modal = document.createElement('div');
+  modal.className = 'modal';
+  modal.style.display = 'flex';
+  modal.innerHTML = `
+    <div class="modal-content" style="max-width:480px">
+      <div style="padding:1.75rem">
+        <h3 style="margin-bottom:.8rem">Checkout</h3>
+        <div style="margin-bottom:1.1rem">
+          <div style="font-size:.8rem;color:#888;margin-bottom:3px">Full name</div>
+          <input id="chkName" value="Ayesha Khan" style="width:100%;padding:.6rem .8rem;background:#1a1a1a;border:1px solid #333;border-radius:8px;color:#fff">
+        </div>
+        <div style="display:flex;gap:.6rem;margin-bottom:.6rem">
+          <div style="flex:1">
+            <div style="font-size:.8rem;color:#888;margin-bottom:3px">Email</div>
+            <input id="chkEmail" value="ayesha@studio.com" style="width:100%;padding:.6rem .8rem;background:#1a1a1a;border:1px solid #333;border-radius:8px;color:#fff">
+          </div>
+          <div style="flex:1">
+            <div style="font-size:.8rem;color:#888;margin-bottom:3px">Phone</div>
+            <input id="chkPhone" value="+1 (917) 555-0192" style="width:100%;padding:.6rem .8rem;background:#1a1a1a;border:1px solid #333;border-radius:8px;color:#fff">
+          </div>
+        </div>
+        <div style="margin:1rem 0 .4rem">
+          <div style="font-size:.8rem;color:#888;margin-bottom:3px">Shipping address</div>
+          <textarea id="chkAddr" style="width:100%;height:64px;padding:.6rem .8rem;background:#1a1a1a;border:1px solid #333;border-radius:8px;color:#fff;font-size:.9rem">221B Baker Street, London NW1 6XE, UK</textarea>
+        </div>
+        <div style="margin:1rem 0">
+          <div style="font-size:.8rem;color:#888;margin-bottom:3px">Payment (demo)</div>
+          <input value="4242 4242 4242 4242" style="width:100%;padding:.6rem .8rem;background:#1a1a1a;border:1px solid #333;border-radius:8px;color:#fff">
+        </div>
+        
+        <div style="margin-top:1.1rem;display:flex;gap:.5rem">
+          <button onclick="completeCheckout(this)" class="btn" style="flex:1">Pay $${cart.reduce((s,i)=>s+i.price*i.qty,0)} • Place Order</button>
+          <button onclick="this.closest('.modal').remove()" class="btn-ghost">Cancel</button>
+        </div>
+        <div style="text-align:center;font-size:.7rem;color:#555;margin-top:1rem">This is a simulated checkout. No real payment is processed.</div>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+function completeCheckout(btn) {
+  const modal = btn.closest('.modal');
+  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  modal.innerHTML = `
+    <div class="modal-content" style="max-width:420px;text-align:center;padding:2.5rem 1.8rem">
+      <div style="font-size:3rem;margin-bottom:.6rem">🎉</div>
+      <h3 style="margin-bottom:.3rem">Order placed successfully!</h3>
+      <p style="color:#888">Thank you. Order #FH${Date.now().toString().slice(-7)} confirmed.<br>Total paid: <strong>$${total}</strong></p>
+      <div style="margin-top:1.4rem">
+        <button onclick="finishOrder(this)" class="btn" style="width:100%">Back to shop</button>
+      </div>
+    </div>
+  `;
+}
+
+function finishOrder(el) {
+  cart = [];
+  updateCartCount();
+  el.closest('.modal').remove();
+  showToast('Thank you! Your order has been confirmed.');
+  filterProducts();
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.display = 'block';
+  setTimeout(() => { t.style.display = 'none'; }, 1950);
+}
+
+function subscribe() {
+  const input = document.getElementById('emailInput');
+  if (!input.value.trim()) return;
+  showToast('Subscribed! Welcome to the FashionHub community.');
+  input.value = '';
+}
+
+function init() {
+  renderProducts(products);
+  updateCartCount();
+  
+  // Search trigger already bound via onkeyup
+  // Sort bound via onchange
+  
+  // Make sure default filter is marked
+  const firstFilter = document.querySelector('.filter');
+  if (firstFilter) firstFilter.classList.add('active');
+
+  // Keyboard escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      const m = document.getElementById('modal');
+      if (m.style.display === 'flex') closeModal();
+      else document.getElementById('cartDrawer').classList.remove('open');
+    }
+  });
+
+  // Seed a couple of items in cart for better first impression (demo only)
+  setTimeout(() => {
+    if (cart.length === 0) {
+      cart.push({...products[0], qty:1});
+      cart.push({...products[2], qty:1});
+      updateCartCount();
+    }
+  }, 1100);
+
+  // Demo tip
+  console.log('%c[FashionHub Demo] Fully interactive demo loaded. Cart, filters, modals & checkout working.', 'color:#555');
+}
+
+init();
+</script>
 </body>
 </html>
