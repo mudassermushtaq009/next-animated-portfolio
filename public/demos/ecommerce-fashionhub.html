@@ -498,12 +498,12 @@ function checkout() {
           <div style="font-size:.8rem;color:#888;margin-bottom:3px">Full name</div>
           <input id="chkName" value="Ayesha Khan" style="width:100%;padding:.6rem .8rem;background:#1a1a1a;border:1px solid #333;border-radius:8px;color:#fff">
         </div>
-        <div style="display:flex;gap:.6rem;margin-bottom:.6rem">
-          <div style="flex:1">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.65rem">
+          <div>
             <div style="font-size:.8rem;color:#888;margin-bottom:3px">Email</div>
             <input id="chkEmail" value="ayesha@studio.com" style="width:100%;padding:.6rem .8rem;background:#1a1a1a;border:1px solid #333;border-radius:8px;color:#fff">
           </div>
-          <div style="flex:1">
+          <div>
             <div style="font-size:.8rem;color:#888;margin-bottom:3px">Phone</div>
             <input id="chkPhone" value="+1 (917) 555-0192" style="width:100%;padding:.6rem .8rem;background:#1a1a1a;border:1px solid #333;border-radius:8px;color:#fff">
           </div>
@@ -573,14 +573,9 @@ function init() {
   renderProducts(products);
   updateCartCount();
   
-  // Search trigger already bound via onkeyup
-  // Sort bound via onchange
-  
-  // Make sure default filter is marked
   const firstFilter = document.querySelector('.filter');
   if (firstFilter) firstFilter.classList.add('active');
 
-  // Keyboard escape
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
       const m = document.getElementById('modal');
@@ -589,7 +584,6 @@ function init() {
     }
   });
 
-  // Seed a couple of items in cart for better first impression (demo only)
   setTimeout(() => {
     if (cart.length === 0) {
       cart.push({...products[0], qty:1});
@@ -598,7 +592,6 @@ function init() {
     }
   }, 1100);
 
-  // Demo tip
   console.log('%c[FashionHub Demo] Fully interactive demo loaded. Cart, filters, modals & checkout working.', 'color:#555');
 }
 

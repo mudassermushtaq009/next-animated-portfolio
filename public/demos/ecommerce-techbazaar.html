@@ -1,63 +1,518 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TechBazaar | Live Demo</title>
-  <style>*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#09090b;--panel:#18181b;--border:#27272a;--text:#e4e4e7;--muted:#a1a1aa;--accent:#6366f1;--accent2:#818cf8;--ok:#34d399}
-body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;line-height:1.5}
-a{color:var(--accent2);text-decoration:none}
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.25rem;border-bottom:1px solid var(--border);background:rgba(9,9,11,.92);position:sticky;top:0;z-index:10;backdrop-filter:blur(8px)}
-.brand{font-weight:700;letter-spacing:-.03em}
-.badge{font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:#a5b4fc;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.35);padding:.25rem .6rem;border-radius:999px}
-.wrap{max-width:960px;margin:0 auto;padding:1.5rem}
-.hero{margin-bottom:1.25rem}
-.hero h1{font-size:clamp(1.6rem,4vw,2.2rem);letter-spacing:-.04em;margin-bottom:.35rem}
-.hero p{color:var(--muted);max-width:60ch}
-.panel{background:var(--panel);border:1px solid var(--border);border-radius:1rem;padding:1rem}
-.grid{display:grid;gap:.75rem}
-.row{display:flex;gap:.6rem;flex-wrap:wrap}
-input,textarea,select,button{font:inherit}
-input,textarea,select{width:100%;background:#0f0f12;border:1px solid var(--border);color:var(--text);border-radius:.75rem;padding:.7rem .85rem}
-input:focus,textarea:focus,select:focus{outline:2px solid rgba(99,102,241,.45);border-color:var(--accent)}
-button{cursor:pointer;border:none;border-radius:.75rem;padding:.65rem 1rem;font-weight:600}
-.btn-primary{background:linear-gradient(135deg,#6366f1,#4f46e5);color:#fff}
-.btn-secondary{background:#27272a;color:#e4e4e7;border:1px solid #3f3f46}
-.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
-.item{display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.8rem .9rem;border:1px solid var(--border);border-radius:.85rem;background:#111114}
-.item h3{font-size:1rem}
-.item p,.meta{color:var(--muted);font-size:.86rem}
-.tag{display:inline-block;font-size:.72rem;padding:.15rem .5rem;border-radius:999px;background:rgba(99,102,241,.12);border:1px solid rgba(99,102,241,.25);color:#c7d2fe;margin-right:.35rem}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:.75rem;margin-bottom:1rem}
-.stat{padding:.9rem;border:1px solid var(--border);border-radius:.85rem;background:#111114}
-.stat strong{display:block;font-size:1.35rem}
-@media (max-width:640px){.row>*{flex:1 1 100%}}
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TechBazaar • Premium Tech</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#05070a;--panel:#0b0f15;--border:#1f2937;--text:#f1f5f9;--muted:#64748b;--accent:#0ea5e9;--accent2:#bae6fd}
+body{font-family:Inter,system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.5}
+a{color:inherit;text-decoration:none}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:.9rem 1.75rem;border-bottom:1px solid var(--border);background:rgba(5,7,10,.96);position:sticky;top:0;z-index:200;backdrop-filter:blur(12px)}
+.brand{font-weight:800;font-size:1.35rem;letter-spacing:-1.5px;color:#bae6fd}
+.nav{display:flex;gap:1.75rem;font-size:.95rem;color:#94a3b8}
+.nav a:hover{color:#e0f2fe}
+.hero{min-height:470px;display:flex;align-items:center;justify-content:center;text-align:center;padding:2rem;background:linear-gradient(rgba(5,7,10,.72),rgba(5,7,10,.6)),url('https://picsum.photos/id/160/2000/1200') center/cover}
+.hero h1{font-size:3.6rem;font-weight:800;margin-bottom:.35rem;letter-spacing:-2px}
+.hero p{max-width:480px;margin:0 auto 1.4rem;font-size:1.08rem;opacity:.9}
+.section{max-width:1280px;margin:0 auto;padding:2.5rem 1.5rem}
+.section h2{font-size:1.65rem;margin-bottom:1.25rem;letter-spacing:-.5px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(245px,1fr));gap:1.25rem}
+.product{position:relative;background:var(--panel);border:1px solid var(--border);border-radius:14px;overflow:hidden;cursor:pointer;transition:all .25s}
+.product:hover{transform:translateY(-6px);box-shadow:0 20px 25px -5px rgb(0 0 0 / .3)}
+.product img{width:100%;height:230px;object-fit:cover;display:block;transition:transform .4s}
+.product:hover img{transform:scale(1.06)}
+.badge-pos{position:absolute;top:12px;left:12px;background:#0c4a6e;color:#bae6fd;font-size:.68rem;padding:2px 9px;border-radius:999px;border:1px solid #0e7490}
+.product-info{padding:.95rem 1rem 1.1rem}
+.product-info h4{font-size:1.02rem;margin-bottom:.15rem}
+.product-info .price{font-weight:700;color:#67e8f9;font-size:1.1rem}
+.product-info .meta{font-size:.78rem;color:var(--muted);margin-top:2px}
+.rating{font-size:.8rem;color:#facc15;margin-top:4px}
+.filters{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center}
+.filter{padding:7px 15px;border:1px solid var(--border);border-radius:999px;font-size:.82rem;background:transparent;color:#94a3b8;cursor:pointer;transition:all .2s}
+.filter:hover{border-color:#334155;color:#e0f2fe}
+.filter.active{background:#0ea5e9;color:#0b0f15;border-color:#0ea5e9;font-weight:600}
+.searchbar{flex:1;min-width:220px;background:#0b0f15;border:1px solid var(--border);border-radius:999px;padding:.5rem 1rem;display:flex;align-items:center;gap:.5rem}
+.searchbar input{flex:1;background:transparent;border:none;color:#e0f2fe;font-size:.95rem;outline:none}
+.sort select{background:#0b0f15;color:#cbd5e1;border:1px solid var(--border);padding:.45rem .8rem;border-radius:8px;font-size:.85rem}
+.cart-btn{position:fixed;bottom:22px;right:22px;background:#e0f2fe;color:#0b0f15;padding:13px 22px;border-radius:999px;box-shadow:0 10px 15px -3px rgb(0 0 0 / .4);font-size:.92rem;font-weight:700;display:flex;align-items:center;gap:8px;z-index:210;cursor:pointer}
+.cart-btn span{background:#0c4a6e;color:#bae6fd;border-radius:999px;padding:1px 7px;font-size:.75rem;margin-left:3px}
+.modal{position:fixed;inset:0;background:rgba(2,6,15,.88);display:none;align-items:center;justify-content:center;z-index:300;padding:1rem}
+.modal-content{background:#0b0f15;border:1px solid #1f2937;max-width:860px;width:100%;border-radius:18px;overflow:hidden}
+.modal-body{display:flex;gap:0;flex-wrap:wrap}
+.modal-img{flex:1;min-width:300px;background:#02070f}
+.modal-img img{width:100%;height:100%;object-fit:cover;min-height:320px;display:block}
+.modal-detail{flex:1;padding:1.75rem;min-width:280px}
+.modal-detail h3{font-size:1.45rem;margin-bottom:.35rem}
+.price-big{font-size:1.85rem;font-weight:800;color:#67e8f9}
+.options{margin:1rem 0}
+.opt-btn{padding:6px 13px;border:1px solid #334155;border-radius:6px;background:transparent;color:#94a3b8;margin-right:6px;margin-bottom:6px;cursor:pointer;font-size:.85rem}
+.opt-btn.active{border-color:#0ea5e9;color:#bae6fd;background:#0c4a6e}
+.toast{position:fixed;bottom:75px;left:50%;transform:translateX(-50%);background:#1e2937;color:#e0f2fe;padding:.6rem 1.15rem;border-radius:999px;font-size:.9rem;box-shadow:0 8px 20px rgb(0 0 0/.5);display:none;z-index:400}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:380px;max-width:92vw;background:#0b0f15;border-left:1px solid #1f2937;z-index:320;transform:translateX(100%);transition:transform .3s;display:flex;flex-direction:column}
+.drawer.open{transform:translateX(0)}
+.drawer-header{padding:1.1rem 1.25rem;border-bottom:1px solid #1f2937;display:flex;justify-content:space-between;align-items:center;font-weight:700}
+.cart-list{flex:1;overflow:auto;padding:1rem}
+.cart-item{display:flex;gap:.85rem;padding:.75rem 0;border-bottom:1px solid #1f2937}
+.cart-item img{width:58px;height:58px;object-fit:cover;border-radius:8px}
+.cart-controls{display:flex;align-items:center;gap:8px;margin-top:4px}
+.cart-controls button{width:26px;height:26px;border-radius:50%;border:1px solid #334155;background:#1e2937;color:#cbd5e1;font-size:1rem;line-height:1}
+.checkout-bar{padding:1rem;border-top:1px solid #1f2937;background:#05070a}
+.stat{display:inline-flex;align-items:center;gap:4px;background:#1e2937;padding:.3rem .75rem;border-radius:999px;font-size:.82rem}
+.review{border:1px solid #1f2937;background:#05070a;padding:1rem;border-radius:12px;margin-bottom:.75rem}
+.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem}
+.specs{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:.78rem;margin-top:.8rem}
+.specs div{background:#1e2937;padding:5px 9px;border-radius:6px;color:#94a3b8}
+input,select,button{font:inherit}
+.btn{display:inline-block;padding:12px 28px;border-radius:999px;font-weight:700;font-size:.95rem;background:#0ea5e9;color:#0b0f15;border:none;cursor:pointer;transition:.2s}
+.btn:hover{transform:translateY(-1px);box-shadow:0 10px 15px -4px rgb(14 165 233 / .35)}
+.btn-ghost{background:transparent;color:#94a3b8;border:1px solid #334155;padding:.55rem 1rem;border-radius:999px;font-size:.85rem}
+@media (max-width:700px){.modal-body{flex-direction:column}.drawer{width:100%}}
 </style>
 </head>
-<body>
-  <header class="topbar">
+<body style="background:#05070a;color:#f1f5f9">
+
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:1.5rem">
     <div class="brand">TechBazaar</div>
-    <div style="display:flex;gap:.5rem;align-items:center">
-      <span class="badge">Live Demo</span>
-      <a href="/" class="btn-ghost" style="padding:.45rem .75rem;border-radius:.65rem">← Portfolio</a>
+    <div class="nav">
+      <a href="#shop">Shop</a>
+      <a href="#collections">Collections</a>
+      <a href="#about">Reviews</a>
     </div>
-  </header>
-  <main class="wrap">
-    <section class="hero">
-      <h1>TechBazaar - Electronics Store</h1>
-      <p>Browse premium gadgets and add items to cart. This is a live preview of the e-commerce experience.</p>
-    </section>
-    <section class="panel"><div class="stats"><div class="stat"><strong id="cartCount">0</strong><span class="meta">items in cart</span></div><div class="stat"><strong id="cartTotal">$ 0</strong><span class="meta">cart total</span></div></div><div id="grid" class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))"><div class="item" style="flex-direction:column;align-items:flex-start"><span class="tag">Audio</span><h3>Sony WH-1000XM5</h3><p class="meta">$ 398</p><button class="btn-primary" data-add="Sony WH-1000XM5">Add to cart</button></div><div class="item" style="flex-direction:column;align-items:flex-start"><span class="tag">Laptops</span><h3>MacBook Air M3</h3><p class="meta">$ 1199</p><button class="btn-primary" data-add="MacBook Air M3">Add to cart</button></div></div></section>
-    <p class="footer-note">Interactive UI preview · Built with MERN stack · <a href="https://github.com/mudassermushtaq009" target="_blank" rel="noopener noreferrer">View source on GitHub</a></p>
-  </main>
-  <script>
-      const products = [{"n":"Sony WH-1000XM5","p":398,"c":"Audio"},{"n":"MacBook Air M3","p":1199,"c":"Laptops"}];
-      let cart=[];
-      const grid=document.getElementById('grid');
-      const render=()=>{grid.innerHTML=products.map(p=>`<div class="item" style="flex-direction:column;align-items:flex-start"><span class="tag">${p.c}</span><h3>${p.n}</h3><p class="meta">$ ${p.p}</p><button class="btn-primary" data-add="${p.n}">Add to cart</button></div>`).join('');document.getElementById('cartCount').textContent=cart.length;document.getElementById('cartTotal').textContent='$ '+cart.reduce((s,i)=>s+i.p,0);};
-      grid.onclick=e=>{const name=e.target.dataset.add;if(!name)return;const p=products.find(x=>x.n===name);if(p){cart.push(p);render();}};
-      render();
-  </script>
+  </div>
+  <div style="display:flex;gap:.6rem;align-items:center">
+    <div class="searchbar">
+      <span>🔎</span>
+      <input id="searchInput" placeholder="Search headphones, laptops..." onkeyup="filterProducts()">
+    </div>
+    <a href="/" class="btn-ghost">← Portfolio</a>
+    <button onclick="showCart()" class="btn-ghost" style="display:flex;align-items:center;gap:6px;padding:.55rem .9rem">
+      Cart <span id="navCartCount">0</span>
+    </button>
+  </div>
+</header>
+
+<!-- Hero -->
+<div class="hero">
+  <div>
+    <div style="display:inline-block;background:#0c4a6e;color:#bae6fd;border:1px solid #0e7490;padding:3px 14px;border-radius:999px;font-size:.73rem;margin-bottom:12px;letter-spacing:1px">PREMIUM ELECTRONICS • 2025</div>
+    <h1 style="color:#e0f2fe">TechBazaar</h1>
+    <p>Curated premium gadgets, audio and laptops.<br>Expert-reviewed. 2-year warranty.</p>
+    <button class="btn" onclick="document.getElementById('shop').scrollIntoView({behavior:'smooth'})" >Browse Tech</button>
+  </div>
+</div>
+
+<!-- Trust -->
+<div style="max-width:1280px;margin:-1.1rem auto 0;padding:0 1.5rem">
+  <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;background:#0b0f15;border:1px solid #1f2937;border-radius:999px;padding:.6rem 1.5rem;font-size:.8rem">
+    <span class="stat">🚀 Same-day dispatch</span>
+    <span class="stat">🔋 2-year warranty on all</span>
+    <span class="stat">📦 Free global shipping $250+</span>
+    <span class="stat">✅ 14-day returns</span>
+  </div>
+</div>
+
+<!-- Shop -->
+<div class="section" id="shop">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <div>
+      <h2>Featured Products</h2>
+      <div style="color:#64748b;font-size:.85rem">All items tested by our experts • 60-day price match</div>
+    </div>
+    <div class="sort">
+      <select id="sortSelect" onchange="filterProducts()">
+        <option value="popular">Sort: Popular</option>
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div onclick="setFilter(this, 'all')" class="filter active">All</div>
+    <div onclick="setFilter(this, 'audio')" class="filter">Audio</div>
+    <div onclick="setFilter(this, 'laptops')" class="filter">Laptops</div>
+    <div onclick="setFilter(this, 'home')" class="filter">Home</div>
+    <div onclick="setFilter(this, 'mobile')" class="filter">Mobile</div>
+    <div onclick="setFilter(this, 'wearables')" class="filter">Wearables</div>
+  </div>
+
+  <div id="productGrid" class="grid"></div>
+</div>
+
+<!-- Collections banner -->
+<div class="section" id="collections" style="background:#0b0f15;border:1px solid #1f2937;border-radius:18px;margin:1.5rem auto;padding:2.25rem 1.75rem">
+  <h2>Shop by Category</h2>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
+    <div onclick="quickFilter('audio')" style="background:#1e2937;border-radius:12px;padding:1rem;cursor:pointer">
+      <div style="height:98px;background:linear-gradient(rgba(15,23,42,.6),rgba(15,23,42,.35)),url('https://picsum.photos/id/180/600/400') center/cover;border-radius:8px;margin-bottom:.5rem"></div>
+      <div style="font-weight:700">Premium Audio</div>
+      <div style="font-size:.78rem;color:#64748b">Studio-grade sound</div>
+    </div>
+    <div onclick="quickFilter('laptops')" style="background:#1e2937;border-radius:12px;padding:1rem;cursor:pointer">
+      <div style="height:98px;background:linear-gradient(rgba(15,23,42,.6),rgba(15,23,42,.35)),url('https://picsum.photos/id/201/600/400') center/cover;border-radius:8px;margin-bottom:.5rem"></div>
+      <div style="font-weight:700">Creator Laptops</div>
+      <div style="font-size:.78rem;color:#64748b">M3 &amp; Snapdragon</div>
+    </div>
+    <div onclick="quickFilter('wearables')" style="background:#1e2937;border-radius:12px;padding:1rem;cursor:pointer">
+      <div style="height:98px;background:linear-gradient(rgba(15,23,42,.6),rgba(15,23,42,.35)),url('https://picsum.photos/id/251/600/400') center/cover;border-radius:8px;margin-bottom:.5rem"></div>
+      <div style="font-weight:700">Smart Watches</div>
+      <div style="font-size:.78rem;color:#64748b">Health + Productivity</div>
+    </div>
+  </div>
+</div>
+
+<!-- Reviews / Why us -->
+<div class="section" id="about">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2.25rem;align-items:center">
+    <div>
+      <div style="display:inline-block;padding:2px 11px;background:#0c4a6e;color:#bae6fd;border-radius:99px;font-size:.72rem">REAL REVIEWS</div>
+      <h2 style="font-size:1.9rem;margin:12px 0 12px">Expert tested.<br>Customer approved.</h2>
+      <div class="specs" style="max-width:280px">
+        <div>✓ 30-day free trial</div>
+        <div>✓ Expert Q&amp;A support</div>
+        <div>✓ Trade-in program</div>
+        <div>✓ Next-day delivery</div>
+      </div>
+    </div>
+    <div class="test-grid">
+      <div class="review">
+        <div style="color:#facc15">★★★★★</div>
+        <div style="font-size:.9rem;margin:6px 0">"Best noise cancelling headphones I've used. Battery lasts forever."</div>
+        <div style="font-size:.75rem;color:#64748b">— Daniel K., Product Designer</div>
+      </div>
+      <div class="review">
+        <div style="color:#facc15">★★★★★</div>
+        <div style="font-size:.9rem;margin:6px 0">"MacBook arrived same day. Superb packaging and tech support."</div>
+        <div style="font-size:.75rem;color:#64748b">— Priya S., Founder @Lumina</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer style="text-align:center;padding:2rem 1rem;color:#475569;font-size:.82rem;border-top:1px solid #1f2937;margin-top:2rem">
+  © 2025 TechBazaar • Premium electronics • <span style="color:#0ea5e9">Interactive MERN Demo</span>
+</footer>
+
+<!-- Modal -->
+<div id="modal" class="modal" onclick="if(event.target.id==='modal')closeModal()">
+  <div class="modal-content" onclick="event.stopImmediatePropagation()">
+    <div class="modal-body">
+      <div class="modal-img" id="modalImg"></div>
+      <div class="modal-detail">
+        <div id="modalBadge" style="font-size:.72rem;padding:2px 9px;border-radius:999px;background:#0c4a6e;color:#bae6fd;display:inline-block;margin-bottom:8px"></div>
+        <h3 id="modalName"></h3>
+        <div class="price-big" id="modalPrice"></div>
+        <div style="margin:6px 0 12px" id="modalRating"></div>
+
+        <div class="options">
+          <div style="font-size:.78rem;color:#64748b;margin-bottom:4px">Configuration</div>
+          <div id="sizeOptions"></div>
+        </div>
+        <div class="options">
+          <div style="font-size:.78rem;color:#64748b;margin-bottom:4px">Color</div>
+          <div id="colorOptions"></div>
+        </div>
+
+        <div style="display:flex;gap:8px;align-items:center;margin:1rem 0 1.25rem">
+          <div style="font-size:.8rem;color:#64748b">Qty</div>
+          <div style="display:flex;border:1px solid #334155;border-radius:999px">
+            <button onclick="changeQty(-1)" style="padding:0 12px;border:none;background:#1e2937;color:#cbd5e1;border-radius:999px 0 0 999px">-</button>
+            <div id="qtyVal" style="padding:4px 17px;font-weight:600">1</div>
+            <button onclick="changeQty(1)" style="padding:0 12px;border:none;background:#1e2937;color:#cbd5e1;border-radius:0 999px 999px 0">+</button>
+          </div>
+        </div>
+
+        <div style="display:flex;gap:.6rem">
+          <button onclick="addCurrentToCart()" class="btn" style="flex:1">Add to Cart</button>
+          <button onclick="buyNow()" class="btn-ghost" style="flex:1;border-color:#0ea5e9;color:#bae6fd">Buy Now</button>
+        </div>
+
+        <div id="modalDesc" style="margin-top:1rem;font-size:.9rem;color:#94a3b8;line-height:1.45"></div>
+        <div onclick="closeModal()" style="margin-top:1.3rem;font-size:.8rem;color:#475569;cursor:pointer">← Close</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Cart Drawer -->
+<div id="cartDrawer" class="drawer">
+  <div class="drawer-header">
+    <span>Your Cart <span id="drawerCount" style="color:#67e8f9"></span></span>
+    <button onclick="hideCart()" class="btn-ghost" style="padding:.2rem .6rem">✕</button>
+  </div>
+  <div id="cartList" class="cart-list"></div>
+  <div class="checkout-bar">
+    <div style="display:flex;justify-content:space-between;font-size:1.05rem;margin-bottom:.7rem">
+      <span>Subtotal</span>
+      <span id="cartTotal" style="font-weight:800"></span>
+    </div>
+    <button onclick="checkout()" class="btn" style="width:100%;padding:13px 0">Checkout Securely</button>
+    <button onclick="clearCart()" style="width:100%;margin-top:.5rem;background:transparent;color:#64748b;border:none;font-size:.8rem;cursor:pointer">Clear cart</button>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+const products = [
+  {id:1, name:"Sony WH-1000XM5", price:398, category:"audio", img:"https://picsum.photos/id/180/600/700", rating:4.9, badge:"Bestseller", desc:"Industry-leading noise cancellation with 30-hour battery. LDAC &amp; 360 Audio support."},
+  {id:2, name:"MacBook Pro M3 14\"", price:1999, category:"laptops", img:"https://picsum.photos/id/201/600/700", rating:4.9, badge:"New", desc:"Apple M3 Pro, 18GB unified memory, Liquid Retina XDR display. Perfect for creators and developers."},
+  {id:3, name:"Dyson V15 Detect", price:749, category:"home", img:"https://picsum.photos/id/251/600/700", rating:4.6, badge:"", desc:"Laser dust detection, powerful suction, 60-minute runtime. The smartest vacuum on the market."},
+  {id:4, name:"iPhone 16 Pro 256GB", price:1099, category:"mobile", img:"https://picsum.photos/id/160/600/700", rating:4.8, badge:"Bestseller", desc:"A18 Pro chip, 48MP camera system, titanium design. The most advanced iPhone yet."},
+  {id:5, name:"Apple Watch Ultra 2", price:799, category:"wearables", img:"https://picsum.photos/id/29/600/700", rating:4.7, badge:"New", desc:"49mm titanium case, precision GPS, up to 36h battery. Built for endurance athletes."},
+  {id:6, name:"Bose QuietComfort Ultra", price:429, category:"audio", img:"https://picsum.photos/id/312/600/700", rating:4.5, badge:"", desc:"Immersive spatial audio, phenomenal comfort and class-leading ANC for long flights."},
+  {id:7, name:"Dell XPS 14 OLED", price:1799, category:"laptops", img:"https://picsum.photos/id/106/600/700", rating:4.6, badge:"", desc:"Intel Core Ultra 7 + RTX 4050. Stunning 3K OLED touchscreen. Thin &amp; light powerhouse."},
+  {id:8, name:"Samsung Galaxy Watch 7", price:329, category:"wearables", img:"https://picsum.photos/id/180/600/700", rating:4.4, badge:"Bestseller", desc:"Advanced health tracking, 40% brighter display, 100+ workout modes."},
+  {id:9, name:"AirPods Max", price:549, category:"audio", img:"https://picsum.photos/id/1005/600/700", rating:4.3, badge:"", desc:"High-fidelity audio with active noise cancelling and spatial audio with dynamic head tracking."},
+  {id:10, name:"ASUS ROG Zephyrus G14", price:1599, category:"laptops", img:"https://picsum.photos/id/251/600/700", rating:4.8, badge:"Bestseller", desc:"AMD Ryzen 9 + RTX 4070. Compact gaming laptop with 14\" 165Hz Nebula HDR display."},
+  {id:11, name:"DJI Mini 4 Pro Drone", price:759, category:"mobile", img:"https://picsum.photos/id/160/600/700", rating:4.9, badge:"New", desc:"4K/60fps HDR video, omnidirectional obstacle sensing. Under 249g — no registration required."},
+  {id:12, name:"Logitech MX Master 3S", price:99, category:"home", img:"https://picsum.photos/id/201/600/700", rating:4.7, badge:"", desc:"Ergonomic productivity mouse. 8K DPI sensor, quiet clicks, multi-device &amp; MagSpeed scroll."}
+];
+
+let cart = [];
+let currentProduct = null;
+let currentQty = 1;
+let currentFilter = 'all';
+
+function renderProducts(list) {
+  const grid = document.getElementById('productGrid');
+  grid.innerHTML = list.map(p => `
+    <div class="product" onclick="openModal(${p.id})">
+      <img src="${p.img}" alt="${p.name}">
+      ${p.badge ? `<div class="badge-pos">${p.badge}</div>` : ''}
+      <div class="product-info">
+        <h4>${p.name}</h4>
+        <div class="price">$${p.price}</div>
+        <div class="meta">${p.category.charAt(0).toUpperCase() + p.category.slice(1)} • 2-year warranty</div>
+        <div class="rating">★ ${p.rating}</div>
+        <button onclick="event.stopImmediatePropagation(); quickAdd(${p.id})" style="margin-top:.6rem;background:#1e2937;color:#94a3b8;font-size:.78rem;border:none;padding:7px 14px;border-radius:999px;cursor:pointer">+ Add</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterProducts() {
+  const term = (document.getElementById('searchInput').value || '').toLowerCase();
+  const sortMode = document.getElementById('sortSelect').value;
+
+  let filtered = products.filter(p => {
+    const matchesCat = currentFilter === 'all' || p.category === currentFilter;
+    const matchesTerm = p.name.toLowerCase().includes(term) || p.category.includes(term);
+    return matchesCat && matchesTerm;
+  });
+
+  if (sortMode === 'price-low') filtered.sort((a,b)=>a.price-b.price);
+  else if (sortMode === 'price-high') filtered.sort((a,b)=>b.price-a.price);
+  else filtered.sort((a,b)=>b.rating-a.rating);
+
+  renderProducts(filtered);
+}
+
+function setFilter(el, cat) {
+  document.querySelectorAll('.filter').forEach(f => f.classList.remove('active'));
+  el.classList.add('active');
+  currentFilter = cat;
+  filterProducts();
+}
+
+function quickFilter(cat) {
+  document.getElementById('shop').scrollIntoView({behavior:'smooth'});
+  setTimeout(() => {
+    document.querySelectorAll('.filter').forEach(f=>f.classList.remove('active'));
+    const targets = document.querySelectorAll('.filter');
+    let matched = [...targets].find(f => f.textContent.toLowerCase().includes(cat));
+    if (!matched && cat==='wearables') matched = [...targets].find(f=>f.textContent==='Wearables');
+    if (matched) matched.classList.add('active');
+    currentFilter = cat;
+    filterProducts();
+  }, 420);
+}
+
+function quickAdd(id) {
+  const p = products.find(x => x.id === id);
+  addToCart(p);
+}
+
+function openModal(id) {
+  currentProduct = products.find(x => x.id === id);
+  currentQty = 1;
+
+  document.getElementById('modalImg').innerHTML = `<img src="${currentProduct.img}">`;
+  document.getElementById('modalName').textContent = currentProduct.name;
+  document.getElementById('modalPrice').textContent = '$' + currentProduct.price;
+  document.getElementById('modalRating').innerHTML = `★ ${currentProduct.rating} <span style="font-size:.85rem;color:#64748b">(Expert rating)</span>`;
+  document.getElementById('modalBadge').textContent = currentProduct.badge || 'Premium Pick';
+  document.getElementById('modalDesc').innerHTML = currentProduct.desc + `<div class="specs"><div>✓ Free returns</div><div>✓ 2yr warranty</div><div>✓ 24/7 support</div><div>✓ Trade-in value</div></div>`;
+
+  document.getElementById('qtyVal').textContent = currentQty;
+
+  const configs = (currentProduct.category==='audio') ? ['Standard','Pro ANC','Hi-Res'] : (currentProduct.category==='laptops') ? ['Base','16GB','32GB'] : ['Standard','Pro','Max'];
+  document.getElementById('sizeOptions').innerHTML = configs.map((s,i)=>`<span onclick="selectOption(this)" class="opt-btn${i===0?' active':''}">${s}</span>`).join('');
+
+  const cols = ['Graphite','Silver','Midnight','Titanium'];
+  document.getElementById('colorOptions').innerHTML = cols.map((c,i)=>`<span onclick="selectOption(this)" class="opt-btn${i===0?' active':''}">${c}</span>`).join('');
+
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function selectOption(el) {
+  [...el.parentElement.children].forEach(e=>e.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function changeQty(delta) {
+  currentQty = Math.max(1, currentQty + delta);
+  document.getElementById('qtyVal').textContent = currentQty;
+}
+
+function addCurrentToCart() {
+  if(!currentProduct) return;
+  addToCart(currentProduct, currentQty);
+  closeModal();
+}
+
+function buyNow() {
+  if(!currentProduct) return;
+  addToCart(currentProduct, currentQty);
+  closeModal();
+  setTimeout(()=>{ showCart(); setTimeout(checkout, 620); }, 280);
+}
+
+function addToCart(product, qty=1) {
+  const existing = cart.findIndex(i=>i.id===product.id);
+  if(existing>-1) cart[existing].qty += qty;
+  else cart.push({...product, qty});
+  updateCartCount();
+  showToast(`${product.name} added`);
+}
+
+function updateCartCount() {
+  const count = cart.reduce((sum,i)=>sum+i.qty,0);
+  const nav = document.getElementById('navCartCount');
+  if(nav) nav.textContent = count;
+}
+
+function showCart() {
+  document.getElementById('cartDrawer').classList.add('open');
+  renderCart();
+}
+
+function hideCart() {
+  document.getElementById('cartDrawer').classList.remove('open');
+}
+
+function renderCart() {
+  const list = document.getElementById('cartList');
+  const totalEl = document.getElementById('cartTotal');
+  const dCount = document.getElementById('drawerCount');
+
+  if(!cart.length) {
+    list.innerHTML = `<div style="padding:3rem 1rem;text-align:center;color:#64748b">Cart is empty<br><button onclick="hideCart()" class="btn-ghost" style="margin-top:1rem">Continue shopping</button></div>`;
+    totalEl.textContent='$0'; dCount.textContent=''; return;
+  }
+
+  list.innerHTML = cart.map((item, idx)=>`
+    <div class="cart-item">
+      <img src="${item.img}">
+      <div style="flex:1">
+        <div style="font-weight:600;font-size:.94rem">${item.name}</div>
+        <div style="color:#67e8f9;font-weight:700">$${item.price}</div>
+        <div class="cart-controls">
+          <button onclick="changeCartQty(${idx},-1)">−</button>
+          <span style="min-width:24px;text-align:center;font-size:.9rem">${item.qty}</span>
+          <button onclick="changeCartQty(${idx},1)">+</button>
+          <button onclick="removeFromCart(${idx})" style="margin-left:10px;color:#f87171;background:transparent;border:none">Remove</button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  const total = cart.reduce((s,i)=>s + i.price*i.qty ,0);
+  totalEl.textContent = '$'+total;
+  dCount.textContent = '('+cart.length+')';
+}
+
+function changeCartQty(i, d) { cart[i].qty = Math.max(1,cart[i].qty+d); renderCart(); updateCartCount(); }
+function removeFromCart(i) { cart.splice(i,1); renderCart(); updateCartCount(); }
+function clearCart() { cart=[]; renderCart(); updateCartCount(); hideCart(); }
+
+function checkout() {
+  hideCart();
+  const m = document.createElement('div');
+  m.className='modal'; m.style.display='flex';
+  m.innerHTML = `
+    <div class="modal-content" style="max-width:480px">
+      <div style="padding:1.75rem">
+        <h3 style="margin-bottom:.8rem">Secure Checkout</h3>
+        <input placeholder="Full Name" value="Ravi Patel" style="width:100%;margin-bottom:.6rem;padding:.6rem .8rem;background:#1e2937;border:1px solid #334155;border-radius:8px;color:#e0f2fe">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:.6rem">
+          <input value="ravi@devstudio.io" style="padding:.6rem .8rem;background:#1e2937;border:1px solid #334155;border-radius:8px;color:#e0f2fe">
+          <input value="+1 415 555 0192" style="padding:.6rem .8rem;background:#1e2937;border:1px solid #334155;border-radius:8px;color:#e0f2fe">
+        </div>
+        <textarea style="width:100%;height:56px;margin-bottom:.6rem;padding:.6rem .8rem;background:#1e2937;border:1px solid #334155;border-radius:8px;color:#e0f2fe;font-size:.9rem">742 Evergreen Terrace, San Francisco, CA 94110</textarea>
+        <div style="font-size:.82rem;color:#64748b;margin-bottom:4px">Card number (demo)</div>
+        <input value="4242 4242 4242 4242  |  03/29  |  392" style="width:100%;padding:.6rem .8rem;background:#1e2937;border:1px solid #334155;border-radius:8px;color:#e0f2fe;margin-bottom:1rem">
+        <button onclick="completeCheckout(this)" class="btn" style="width:100%">Pay $${cart.reduce((s,i)=>s+i.price*i.qty,0)} • Confirm Order</button>
+        <div onclick="this.closest('.modal').remove()" style="text-align:center;margin-top:.85rem;color:#475569;cursor:pointer;font-size:.8rem">Cancel</div>
+      </div>
+    </div>`;
+  document.body.appendChild(m);
+}
+
+function completeCheckout(btn) {
+  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const modal = btn.closest('.modal');
+  modal.innerHTML = `
+    <div class="modal-content" style="max-width:420px;text-align:center;padding:2.4rem">
+      <div style="font-size:2.9rem">✅</div>
+      <h3 style="margin:.5rem 0 .2rem">Order Confirmed!</h3>
+      <p style="color:#64748b">TechBazaar order #TB${Date.now().toString().slice(-6)} placed.<br>Charged: <strong>$${total}</strong></p>
+      <button onclick="finishOrder(this)" class="btn" style="margin-top:1.4rem;width:100%">Return to Store</button>
+    </div>`;
+}
+
+function finishOrder(el){
+  cart = []; updateCartCount();
+  el.closest('.modal').remove();
+  showToast('Order placed! Expect shipping email shortly.');
+  filterProducts();
+}
+
+function closeModal(){ document.getElementById('modal').style.display='none'; }
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent=msg; t.style.display='block';
+  setTimeout(()=>t.style.display='none',1900);
+}
+
+function init(){
+  renderProducts(products);
+  updateCartCount();
+
+  document.querySelectorAll('.filter')[0]?.classList.add('active');
+
+  document.addEventListener('keydown', e=>{
+    if(e.key==='Escape'){
+      const md = document.getElementById('modal');
+      if(md.style.display==='flex') closeModal();
+      else document.getElementById('cartDrawer').classList.remove('open');
+    }
+  });
+
+  setTimeout(()=>{
+    if(!cart.length){
+      cart.push({...products[0],qty:1}, {...products[3],qty:1});
+      updateCartCount();
+    }
+  }, 900);
+
+  console.log('%c[TechBazaar Demo] Fully interactive. Filters + real cart + checkout ready.', 'color:#475569');
+}
+init();
+</script>
 </body>
 </html>
